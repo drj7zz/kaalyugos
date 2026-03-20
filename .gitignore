@@ -1,0 +1,16 @@
+# Environment secrets — NEVER commit these
+.env
+.env.*
+!.env.example
+!**/.env.example
+
+# Build outputs
+dist/
+*.log
+
+# Dependencies
+node_modules/
+
+# OS artefacts
+.DS_Store
+Thumbs.db
