@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap');
+
+/* ========== THEME TOKENS ========== */
+:root,
+[data-theme='dark'] {
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.80);
+  --text-muted: rgba(255, 255, 255, 0.55);
+  --glass-bg: rgba(28, 28, 30, 0.55);
+  --glass-header: rgba(255, 255, 255, 0.10);
+  --glass-border: rgba(255, 255, 255, 0.15);
+  --glass-blur: blur(16px);
+  --dock-bg: rgba(255, 255, 255, 0.14);
+  --accent: #0A84FF;
+  --accent-soft: rgba(10, 132, 255, 0.20);
+  --shortcut-text: #ffffff;
+  --shortcut-shadow: rgba(0, 0, 0, 0.85);
+  /* Solid opaque bg for fullscreen windows */
+  --window-solid-bg: #1c1c1e;
+}
+
+[data-theme='blue'] {
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.85);
+  --text-muted: rgba(255, 255, 255, 0.55);
+  --glass-bg: rgba(0, 50, 110, 0.50);
+  --glass-header: rgba(100, 180, 255, 0.14);
+  --glass-border: rgba(100, 200, 255, 0.28);
+  --glass-blur: blur(16px);
+  --dock-bg: rgba(0, 80, 180, 0.35);
+  --accent: #64D2FF;
+  --accent-soft: rgba(100, 210, 255, 0.20);
+  --shortcut-text: #ffffff;
+  --shortcut-shadow: rgba(0, 0, 40, 0.9);
+  --window-solid-bg: #001a40;
+}
+
+[data-theme='pink'] {
+  --text-primary: #3d0028;
+  --text-secondary: rgba(61, 0, 40, 0.80);
+  --text-muted: rgba(61, 0, 40, 0.55);
+  --glass-bg: rgba(255, 210, 230, 0.52);
+  --glass-header: rgba(255, 230, 242, 0.42);
+  --glass-border: rgba(200, 60, 120, 0.25);
+  --glass-blur: blur(16px);
+  --dock-bg: rgba(255, 160, 210, 0.35);
+  --accent: #b5005e;
+  --accent-soft: rgba(181, 0, 94, 0.15);
+  /* Folder icons on desktop: keep white text with shadow for readability */
+  --shortcut-text: #ffffff;
+  --shortcut-shadow: rgba(80, 0, 40, 0.95);
+  --window-solid-bg: #fce8f3;
+}
+
+/* ========== BASE ========== */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Figtree', -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* ========== LAYOUT ========== */
+.os-container {
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  position: relative;
+  overflow: hidden;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* ─── WALLPAPER ─────────────────────────────── */
+.os-background {
+  position: absolute;
+  inset: 0;
+  background-image: url('/bg.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
+}
+
+/* ─── LOCK SCREEN BACKGROUND ─────────────────── */
+/* The lock screen uses its own full-cover bg with blur — no separate element needed */
+.lockscreen-bg {
+  position: fixed;
+  inset: 0;
+  background-image: url('/bg.jpeg');
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.72);
+  transform: none;
+  transform-origin: center;
+  z-index: 0;
+}
