@@ -1,0 +1,598 @@
+.desktop-container {
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  animation: fadeIn 0.4s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Menu Bar */
+.menu-bar {
+  height: 28px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px;
+  box-sizing: border-box;
+  font-size: 13px;
+  z-index: 9999;
+  background: var(--glass-header);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-bottom: 1px solid var(--glass-border);
+  color: var(--text-primary);
+}
+
+.menu-left, .menu-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.mobile-status-bar,
+.mobile-app-grid {
+  display: none;
+}
+.mobile-only-dock-item { display: none; }
+
+.apple-logo-img {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.apple-logo-img img {
+  display: block;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  object-fit: cover;
+  overflow: hidden;
+}
+
+.apple-logo-img:hover {
+  transform: scale(1.1);
+}
+
+/* Navbar Menu Items: Clean scale, zero glow, zero heavy background box */
+.menu-item {
+  cursor: pointer;
+  padding: 2px 4px;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+  user-select: none;
+  background: transparent !important;
+  text-shadow: none !important;
+}
+
+.menu-item:hover {
+  background: transparent !important;
+  transform: translateY(-1px);
+  opacity: 0.9;
+  text-shadow: none !important;
+}
+
+.fw-bold {
+  font-weight: 600;
+}
+
+.menu-icon {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 2px;
+  transition: transform 0.15s ease;
+  background: transparent !important;
+}
+
+.menu-icon:hover {
+  background: transparent !important;
+  transform: scale(1.1);
+}
+
+.menu-time {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Workspace */
+.workspace {
+  flex: 1;
+  position: relative;
+  padding: 20px;
+  padding-bottom: 92px;
+  min-height: 0;
+}
+
+/* Desktop Icons: Clean Icon Pop-up Effect without glow */
+.desktop-icons {
+  display: none;
+  flex-direction: column;
+  gap: 24px;
+  width: 100px;
+}
+
+.desktop-shortcut {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: transform 0.2s ease;
+}
+
+.shortcut-icon-wrapper {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.desktop-shortcut:hover .shortcut-icon-wrapper {
+  transform: scale(1.12) translateY(-2px);
+}
+
+.shortcut-title {
+  color: var(--shortcut-text, #ffffff);
+  font-size: 12px;
+  text-align: center;
+  font-weight: 600;
+  padding: 2px 4px;
+  transition: transform 0.2s ease;
+  background: transparent !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6) !important;
+}
+
+.desktop-shortcut:hover .shortcut-title {
+  background: transparent !important;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.85) !important;
+}
+
+.desktop-shortcut:active {
+  transform: scale(0.96);
+}
+
+/* Dock */
+.dock-container {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  z-index: 9000;
+}
+
+.dock {
+  display: flex;
+  max-width: calc(100vw - 24px);
+  overflow-x: auto;
+  scrollbar-width: none;
+  gap: 12px;
+  padding: 8px 12px;
+  border-radius: 20px;
+  background: var(--dock-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+}
+
+.dock::-webkit-scrollbar { display: none; }
+
+.dock-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  position: relative;
+  flex: 0 0 auto;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.dock-item:hover {
+  transform: scale(1.08) translateY(-4px);
+}
+
+.dock-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.dock-indicator {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--text-primary);
+  position: absolute;
+  bottom: -8px;
+}
+
+/* Spotlight Search */
+.spotlight-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--glass-bg);
+  z-index: 9500;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 15vh;
+}
+
+.spotlight-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 500px;
+  max-width: 90%;
+  padding: 12px 20px;
+  border-radius: 12px;
+  gap: 12px;
+  background: var(--glass-header);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.spotlight-container input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-size: 20px;
+  outline: none;
+  font-family: inherit;
+}
+.search-results { position: absolute; top: calc(100% + 8px); left: 0; right: 0; display: flex; flex-direction: column; gap: 4px; padding: 7px; border-radius: 10px; background: var(--window-solid-bg); border: 1px solid var(--glass-border); }
+.search-results button { display: flex; align-items: center; gap: 10px; padding: 9px; border: 0; border-radius: 7px; color: var(--text-primary); background: transparent; text-align: left; cursor: pointer; }
+.search-results button:hover { background: var(--glass-header); }
+.search-results .web-search-result { border-top: 1px solid var(--glass-border); margin-top: 4px; color: var(--accent); }
+.search-empty { padding: 9px; color: var(--text-muted); }
+
+/* ── Notification Center ── */
+.notification-center {
+  position: absolute; top: 36px; right: 16px; z-index: 9600;
+  width: min(340px, calc(100vw - 32px));
+  padding: 16px; border-radius: 16px;
+  color: var(--text-primary);
+  background: var(--window-solid-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 14px 40px rgba(0,0,0,.4);
+  display: flex; flex-direction: column; gap: 10px;
+  animation: slideDown 0.2s ease-out;
+  max-height: 70vh; overflow-y: auto;
+}
+.notif-header { display: flex; justify-content: space-between; align-items: center; }
+.notif-header b { font-size: 14px; }
+.notif-clear-all { border: 0; background: transparent; color: var(--accent); cursor: pointer; font-size: 12px; padding: 2px 6px; border-radius: 6px; }
+.notif-clear-all:hover { background: var(--glass-header); }
+.notif-empty { color: var(--text-muted); font-size: 13px; text-align: center; margin: 12px 0; }
+
+.notif-card {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 10px 12px; border-radius: 12px;
+  background: var(--glass-header);
+  border: 1px solid var(--glass-border);
+  position: relative;
+  animation: slideDown 0.15s ease-out;
+}
+.notif-icon { width: 28px; height: 28px; flex: 0 0 28px; display: flex; align-items: center; justify-content: center; margin-top: 2px; color: var(--text-secondary); }
+.notif-body { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+.notif-body b { font-size: 12px; }
+.notif-body span { font-size: 12px; color: var(--text-secondary); }
+.notif-body small { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
+.notif-dismiss {
+  position: absolute; top: 6px; right: 6px;
+  border: 0; background: transparent; color: var(--text-muted);
+  cursor: pointer; padding: 2px; border-radius: 50%;
+  display: grid; place-items: center;
+}
+.notif-dismiss:hover { background: var(--glass-header); color: var(--text-primary); }
+
+.notif-permission-card {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px; border-radius: 12px;
+  background: rgba(0,122,255,0.08);
+  border: 1px solid rgba(0,122,255,0.2);
+}
+.notif-permission-card div { flex: 1; }
+.notif-permission-card b { font-size: 12px; display: block; }
+.notif-permission-card p { font-size: 11px; color: var(--text-muted); margin: 2px 0 0; }
+.notif-permission-card button {
+  border: 0; border-radius: 8px; padding: 6px 12px;
+  background: var(--accent); color: #fff; font-size: 12px;
+  cursor: pointer; font-weight: 600;
+}
+
+/* ── Tutorial Overlay ── */
+.tutorial-overlay {
+  position: absolute; inset: 0; z-index: 9700;
+  display: grid; place-items: center;
+  background: rgba(0,0,0,.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.tutorial-card {
+  width: min(420px, calc(100vw - 32px));
+  padding: 28px; border-radius: 20px;
+  background: var(--window-solid-bg);
+  color: var(--text-primary);
+  animation: slideDown 0.25s ease-out;
+}
+.tutorial-step-indicator {
+  display: flex; justify-content: center; gap: 6px; margin-bottom: 16px;
+}
+.tutorial-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--glass-border);
+  transition: background 200ms ease, transform 200ms ease;
+}
+.tutorial-dot.active { background: var(--accent); transform: scale(1.3); }
+.tutorial-card h2 { font-size: 1.15rem; margin: 0 0 10px; }
+.tutorial-body p { font-size: 0.86rem; color: var(--text-secondary); margin: 4px 0; line-height: 1.5; }
+.tutorial-actions {
+  display: flex; justify-content: flex-end; gap: 8px; margin-top: 18px;
+}
+.tutorial-actions button {
+  border: 0; border-radius: 10px; padding: 9px 18px;
+  background: var(--accent); color: #fff; cursor: pointer;
+  font-weight: 600; font-size: 13px;
+  display: flex; align-items: center; gap: 4px;
+  transition: transform 100ms ease;
+}
+.tutorial-actions button:active { transform: scale(0.96); }
+.tutorial-btn-secondary {
+  background: var(--glass-header) !important;
+  color: var(--text-primary) !important;
+}
+.tutorial-close {
+  position: absolute; top: 14px; right: 14px;
+  border: 0; background: transparent;
+  color: var(--text-muted); cursor: pointer;
+  display: grid; place-items: center;
+  padding: 4px; border-radius: 6px;
+  transition: background 140ms ease;
+}
+.tutorial-close:hover { background: var(--glass-header); color: var(--text-primary); }
+.tutorial-card { position: relative; }
+
+
+/* ─────────────────────────────────────────────────────────
+   MOBILE — iOS-Style Home Screen
+───────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* Menu bar becomes transparent iOS status bar */
+  .menu-bar {
+    height: calc(50px + env(safe-area-inset-top));
+    padding: env(safe-area-inset-top) 20px 0;
+    background: transparent;
+    border: 0;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .menu-left,
+  .menu-right { display: none; }
+
+  /* iOS Status Bar */
+  .mobile-status-bar {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  }
+
+  .mobile-status-bar > div {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .mobile-lock-button {
+    display: grid;
+    width: 28px;
+    height: 28px;
+    place-items: center;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    color: #fff;
+    background: rgba(255,255,255,0.18);
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .mobile-only-dock-item { display: flex; }
+  .dock-item.mobile-optional:not(.is-open) { display: none; }
+
+  /* Dynamic Island */
+  .dynamic-island {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 104px;
+    height: 30px;
+    border-radius: 999px;
+    background: #050505;
+    box-shadow:
+      0 1px 2px rgba(255,255,255,0.12),
+      inset 0 1px rgba(255,255,255,0.07),
+      0 2px 8px rgba(0,0,0,0.5);
+    transform: translate(-50%, -50%);
+  }
+
+  .menu-time { display: none; }
+
+  /* Workspace — home screen area */
+  .workspace {
+    padding: 20px 18px 120px;
+  }
+
+  .desktop-icons { display: none; }
+
+  /* iOS Home Screen App Grid */
+  .mobile-app-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 28px 12px;
+    width: 100%;
+    padding: 8px 0;
+  }
+
+  /* App button */
+  .mobile-app {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    border: 0;
+    padding: 0;
+    color: #fff;
+    background: transparent;
+    font: 600 11px/1.2 -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+    letter-spacing: -0.1px;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  /* iOS Squircle Icon */
+  .mobile-app-icon {
+    display: grid;
+    width: 62px;
+    height: 62px;
+    place-items: center;
+    border-radius: 14px; /* ~22.4% of 62px = iOS squircle */
+    box-shadow:
+      inset 0 1px rgba(255,255,255,0.32),
+      inset 0 -1px rgba(0,0,0,0.14),
+      0 4px 14px rgba(0,0,0,0.32);
+    transition: transform 0.12s cubic-bezier(0.34,1.56,0.64,1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* iOS icon gloss overlay */
+  .mobile-app-icon::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 50%;
+    background: linear-gradient(rgba(255,255,255,0.18), transparent);
+    border-radius: 14px 14px 0 0;
+    pointer-events: none;
+  }
+
+  /* iOS spring press animation */
+  .mobile-app:active .mobile-app-icon {
+    transform: scale(0.88);
+  }
+
+  /* App name label */
+  .mobile-app span:last-child {
+    max-width: 62px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  /* Dock — iOS-style frosted glass bar */
+  .dock-container {
+    bottom: max(10px, env(safe-area-inset-bottom));
+    transition: opacity 200ms ease, transform 200ms ease;
+  }
+
+  .dock-container.app-active {
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .dock {
+    width: min(calc(100vw - 28px), 400px);
+    justify-content: space-around;
+    gap: 0;
+    padding: 12px 8px;
+    border-radius: 28px;
+    background: rgba(255,255,255,0.22);
+    border-color: rgba(255,255,255,0.32);
+    backdrop-filter: blur(40px) saturate(1.8);
+    -webkit-backdrop-filter: blur(40px) saturate(1.8);
+    box-shadow:
+      0 4px 24px rgba(0,0,0,0.28),
+      inset 0 1px rgba(255,255,255,0.28);
+  }
+
+  .dock-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 13px;
+    box-shadow:
+      inset 0 1px rgba(255,255,255,0.28),
+      0 3px 8px rgba(0,0,0,0.3);
+  }
+
+  .dock-item:hover { transform: scale(1.05) translateY(-2px); }
+
+  /* Spotlight */
+  .spotlight-overlay {
+    padding: calc(env(safe-area-inset-top) + 68px) 12px 0;
+  }
+  .spotlight-container { width: 92%; }
+  .spotlight-container input { font-size: 16px; }
+
+  /* Notification center repositioned for mobile */
+  .notification-center {
+    top: auto !important;
+    bottom: 110px;
+    left: 16px !important;
+    right: 16px !important;
+    width: auto !important;
+  }
+}
+
+@media (max-width: 400px) {
+  .workspace { padding: 16px 14px 118px; }
+  .dock-icon { width: 46px; height: 46px; }
+  .mobile-app-grid { gap: 22px 8px; }
+  .mobile-app-icon { width: 56px; height: 56px; }
+}
