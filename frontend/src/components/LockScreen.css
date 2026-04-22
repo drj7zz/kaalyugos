@@ -1,0 +1,832 @@
+/* ═══════════════════════════════════════════════════════
+   KAALYUG OS — Liquid Glass Lock Screen
+═══════════════════════════════════════════════════════ */
+
+.lockscreen-container {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  min-height: 100svh;
+  height: 100dvh;
+  overflow: hidden;
+  color: #fff;
+  cursor: default;
+}
+
+.lockscreen-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  pointer-events: none;
+  background-image: url('/bg.jpeg');
+  background-position: center;
+  background-size: cover;
+  filter: saturate(1.1) brightness(0.7);
+}
+
+.lockscreen-container::after {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  content: '';
+  background: linear-gradient(
+    180deg,
+    rgba(7,12,24,0.18),
+    rgba(7,12,24,0.38)
+  );
+}
+
+/* ── Liquid Glass animated blobs ── */
+
+.ls-blob {
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: 50%;
+  filter: blur(64px);
+  opacity: 0.45;
+  will-change: transform;
+}
+
+.ls-blob-1 {
+  width: 420px;
+  height: 420px;
+  top: -100px;
+  left: -80px;
+  background: radial-gradient(
+    circle,
+    #6e4bff 0%,
+    #3b00cc 60%,
+    transparent 100%
+  );
+  animation: blobFloat1 14s ease-in-out infinite;
+}
+
+.ls-blob-2 {
+  width: 360px;
+  height: 360px;
+  top: 30%;
+  right: -100px;
+  background: radial-gradient(
+    circle,
+    #00c6ff 0%,
+    #0072ff 60%,
+    transparent 100%
+  );
+  animation: blobFloat2 18s ease-in-out infinite;
+}
+
+.ls-blob-3 {
+  width: 300px;
+  height: 300px;
+  bottom: 0;
+  left: 20%;
+  background: radial-gradient(
+    circle,
+    #ff6fd8 0%,
+    #a855f7 60%,
+    transparent 100%
+  );
+  animation: blobFloat3 20s ease-in-out infinite;
+}
+
+.ls-blob-4 {
+  width: 280px;
+  height: 280px;
+  bottom: 20%;
+  right: 15%;
+  background: radial-gradient(
+    circle,
+    #00f5c4 0%,
+    #0099cc 60%,
+    transparent 100%
+  );
+  animation: blobFloat4 16s ease-in-out infinite;
+  opacity: 0.3;
+}
+
+@keyframes blobFloat1 {
+  0%,100% {
+    transform: translate(0,0) scale(1);
+  }
+
+  33% {
+    transform: translate(40px, 60px) scale(1.07);
+  }
+
+  66% {
+    transform: translate(-20px, 30px) scale(0.95);
+  }
+}
+
+@keyframes blobFloat2 {
+  0%,100% {
+    transform: translate(0,0) scale(1);
+  }
+
+  40% {
+    transform: translate(-50px, 40px) scale(1.05);
+  }
+
+  70% {
+    transform: translate(20px, -30px) scale(0.97);
+  }
+}
+
+@keyframes blobFloat3 {
+  0%,100% {
+    transform: translate(0,0) scale(1);
+  }
+
+  30% {
+    transform: translate(30px, -40px) scale(1.1);
+  }
+
+  60% {
+    transform: translate(-40px, 20px) scale(0.92);
+  }
+}
+
+@keyframes blobFloat4 {
+  0%,100% {
+    transform: translate(0,0) scale(1);
+  }
+
+  50% {
+    transform: translate(-30px, -50px) scale(1.08);
+  }
+}
+
+.lockscreen-container.unlock-anim {
+  opacity: 0;
+  transform: scale(1.025);
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease;
+}
+
+/* ── Top status bar ── */
+
+.ls-topbar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: flex-end;
+  padding: 18px 24px;
+}
+
+.ls-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: rgba(255,255,255,0.92);
+  filter: drop-shadow(0 1px 4px rgba(0,0,0,0.32));
+}
+
+/* ── Clock ── */
+
+.ls-clock-section {
+  position: absolute;
+  top: clamp(72px, 14vh, 140px);
+  right: 24px;
+  left: 24px;
+  z-index: 1;
+  text-align: center;
+  animation: lsFadeInDown 0.7s cubic-bezier(0.16,1,0.3,1) both;
+  user-select: none;
+}
+
+.ls-clock {
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "SF Pro Display",
+    "Helvetica Neue",
+    sans-serif;
+
+  font-size: clamp(4.5rem, 10vw, 8.25rem);
+  font-weight: 200;
+  line-height: 0.93;
+
+  text-shadow: 0 3px 26px rgba(0,0,0,0.28);
+}
+
+.ls-date {
+  margin-top: 12px;
+  color: rgba(255,255,255,0.92);
+  font-size: clamp(1rem, 1.8vw, 1.28rem);
+  font-weight: 500;
+  text-shadow: 0 1px 9px rgba(0,0,0,0.34);
+}
+
+/* ── User section ── */
+
+.ls-user-section {
+  position: absolute;
+  top: 57%;
+  left: 50%;
+  z-index: 1;
+
+  display: flex;
+  width: min(100% - 40px, 300px);
+
+  flex-direction: column;
+  align-items: center;
+  gap: 11px;
+
+  transform: translate(-50%, -50%);
+
+  animation:
+    lsFadeInUp
+    0.7s
+    cubic-bezier(0.16,1,0.3,1)
+    0.1s
+    both;
+}
+
+/* ═══════════════════════════════════════════════════════
+   LOGIN CARD
+   OPAQUE BACKGROUND
+═══════════════════════════════════════════════════════ */
+
+.ls-glass-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 11px;
+
+  padding: 24px 28px 20px;
+
+  border-radius: 28px;
+
+  /* OPAQUE — no background bleed-through */
+  background: #151923;
+
+  border: 1px solid rgba(255,255,255,0.22);
+
+  /*
+   * Removed backdrop-filter from the card itself.
+   * The solid background prevents the background image
+   * and animated blobs from showing through.
+   */
+  box-shadow:
+    0 8px 40px rgba(0,0,0,0.28),
+    inset 0 1px 0 rgba(255,255,255,0.18),
+    inset 0 -1px 0 rgba(255,255,255,0.06);
+
+  width: 100%;
+}
+
+.ls-avatar-ring {
+  position: relative;
+  width: 112px;
+  height: 112px;
+
+  overflow: hidden;
+
+  border: 2px solid rgba(255,255,255,0.5);
+  border-radius: 50%;
+
+  box-shadow: 0 8px 28px rgba(0,0,0,0.38);
+
+  cursor: pointer;
+
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.ls-avatar-ring.focused,
+.ls-avatar-ring:hover {
+  border-color: rgba(255,255,255,0.9);
+
+  box-shadow:
+    0 10px 34px rgba(0,0,0,0.48),
+    0 0 0 4px rgba(255,255,255,0.1);
+
+  transform: scale(1.035);
+}
+
+.ls-avatar-img {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: 50% 58%;
+
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.ls-username {
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "SF Pro Text",
+    "Helvetica Neue",
+    sans-serif;
+
+  font-size: 1.08rem;
+  font-weight: 600;
+
+  text-shadow: 0 1px 10px rgba(0,0,0,0.38);
+
+  user-select: none;
+}
+
+/* ── Password ── */
+
+.ls-password-section {
+  display: flex;
+
+  max-height: 0;
+
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+
+  overflow: hidden;
+  opacity: 0;
+
+  transition:
+    max-height 300ms ease,
+    opacity 220ms ease;
+
+  width: 100%;
+}
+
+.ls-password-section.visible {
+  max-height: 120px;
+  opacity: 1;
+}
+
+.ls-password-field {
+  display: flex;
+
+  width: 100%;
+  height: 42px;
+
+  align-items: center;
+
+  box-sizing: border-box;
+
+  padding: 0 6px 0 16px;
+
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 12px;
+
+  background: rgba(255,255,255,0.12);
+
+  box-shadow:
+    inset 0 1px rgba(255,255,255,0.14),
+    0 4px 16px rgba(0,0,0,0.14);
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  transition:
+    border-color 160ms ease,
+    background 160ms ease;
+}
+
+.ls-password-field:focus-within {
+  border-color: rgba(255,255,255,0.8);
+  background: rgba(255,255,255,0.18);
+}
+
+.ls-password-field.shake {
+  animation: lsShake 0.4s ease;
+}
+
+.ls-password-input {
+  min-width: 0;
+  flex: 1;
+
+  border: 0;
+  outline: 0;
+
+  background: transparent;
+  color: #fff;
+
+  font:
+    400 0.88rem
+    -apple-system,
+    BlinkMacSystemFont,
+    "SF Pro Text",
+    sans-serif;
+
+  letter-spacing: 0.08em;
+}
+
+.ls-password-input::placeholder {
+  color: rgba(255,255,255,0.6);
+  font-size: 0.8rem;
+  letter-spacing: 0;
+}
+
+.ls-password-btn {
+  display: grid;
+
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+
+  place-items: center;
+
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 50%;
+
+  background: rgba(255,255,255,0.18);
+
+  cursor: pointer;
+
+  transition:
+    background 160ms ease,
+    transform 160ms ease;
+}
+
+.ls-password-btn:hover {
+  background: rgba(255,255,255,0.32);
+  transform: scale(1.06);
+}
+
+/* ── Buttons ── */
+
+.ls-skip-btn,
+.ls-bottom-btn {
+  border: 0;
+  border-radius: 8px;
+
+  background: transparent;
+  color: rgba(255,255,255,0.8);
+
+  cursor: pointer;
+
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "SF Pro Text",
+    sans-serif;
+
+  transition:
+    color 160ms ease,
+    background 160ms ease;
+}
+
+.ls-skip-btn {
+  padding: 4px 10px;
+  font-size: 0.75rem;
+}
+
+.ls-bottom-bar {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+
+  padding: 18px 24px 22px;
+}
+
+.ls-bottom-btn {
+  padding: 6px 14px;
+  font-size: 0.78rem;
+
+  text-shadow: 0 1px 7px rgba(0,0,0,0.38);
+
+  border-radius: 10px;
+
+  border: 1px solid rgba(255,255,255,0.18);
+
+  background: rgba(255,255,255,0.08);
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.ls-skip-btn:hover,
+.ls-bottom-btn:hover {
+  background: rgba(255,255,255,0.18);
+  color: #fff;
+}
+
+.ls-click-hint {
+  color: rgba(255,255,255,0.72);
+  font-size: 0.76rem;
+
+  text-shadow: 0 1px 7px rgba(0,0,0,0.35);
+
+  animation: lsPulse 2.5s ease-in-out infinite;
+
+  user-select: none;
+}
+
+/* ═══════════════════════════════════════════════════════
+   LOCKSCREEN SUPPORT OVERLAY
+═══════════════════════════════════════════════════════ */
+
+.ls-support-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(0,0,0,0.35);
+
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  animation: lsFadeIn 0.25s ease;
+}
+
+/* ═══════════════════════════════════════════════════════
+   HELP & SUPPORT CARD
+   OPAQUE BACKGROUND
+═══════════════════════════════════════════════════════ */
+
+.ls-support-card {
+  width: min(360px, calc(100vw - 48px));
+
+  padding: 28px 28px 24px;
+
+  border-radius: 24px;
+
+  /* OPAQUE — no background bleed-through */
+  background: #151923;
+
+  border: 1px solid rgba(255,255,255,0.24);
+
+  /*
+   * Removed backdrop-filter from the card itself.
+   * The solid background prevents the background image
+   * and animated blobs from showing through.
+   */
+  box-shadow:
+    0 16px 48px rgba(0,0,0,0.38),
+    inset 0 1px 0 rgba(255,255,255,0.2);
+}
+
+.ls-support-card h2 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+
+.ls-support-card p {
+  color: rgba(255,255,255,0.75);
+  font-size: 0.88rem;
+  margin: 0 0 20px;
+}
+
+.ls-support-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.ls-support-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 12px 16px;
+
+  border-radius: 14px;
+
+  background: rgba(255,255,255,0.1);
+
+  border: 1px solid rgba(255,255,255,0.16);
+
+  cursor: pointer;
+
+  text-decoration: none;
+  color: #fff;
+
+  transition:
+    background 160ms ease,
+    transform 160ms ease;
+}
+
+.ls-support-link:hover {
+  background: rgba(255,255,255,0.2);
+  transform: translateY(-1px);
+}
+
+.ls-support-link-icon {
+  width: 36px;
+  height: 36px;
+
+  border-radius: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 1.1rem;
+}
+
+.ls-support-link-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.ls-support-link-name {
+  font-weight: 600;
+  font-size: 0.88rem;
+}
+
+.ls-support-link-handle {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.6);
+}
+
+.ls-support-close {
+  width: 100%;
+
+  padding: 11px;
+
+  border: 0;
+  border-radius: 14px;
+
+  background: rgba(255,255,255,0.16);
+  color: #fff;
+
+  font-size: 0.9rem;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: background 160ms ease;
+}
+
+.ls-support-close:hover {
+  background: rgba(255,255,255,0.28);
+}
+
+/* ── Animations ── */
+
+@keyframes lsFadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes lsFadeInUp {
+  from {
+    opacity: 0;
+    transform: translate(
+      -50%,
+      calc(-50% + 18px)
+    );
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes lsShake {
+  0%,100% {
+    transform: translateX(0);
+  }
+
+  20% {
+    transform: translateX(-7px);
+  }
+
+  40% {
+    transform: translateX(7px);
+  }
+
+  60% {
+    transform: translateX(-5px);
+  }
+
+  80% {
+    transform: translateX(3px);
+  }
+}
+
+@keyframes lsPulse {
+  0%,100% {
+    opacity: 0.56;
+  }
+
+  50% {
+    opacity: 0.92;
+  }
+}
+
+@keyframes lsFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* ── Responsive ── */
+
+@media (max-width: 600px) {
+
+  .ls-topbar {
+    padding: 15px 17px;
+  }
+
+  .ls-topbar::before {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+
+    width: 96px;
+    height: 26px;
+
+    border-radius: 999px;
+
+    background: #050505;
+
+    content: '';
+
+    transform: translateX(-50%);
+
+    box-shadow:
+      inset 0 1px rgba(255,255,255,0.08),
+      0 1px 3px rgba(0,0,0,0.3);
+  }
+
+  .ls-topbar-right {
+    gap: 11px;
+  }
+
+  .ls-clock-section {
+    top: clamp(82px, 14vh, 118px);
+  }
+
+  .ls-clock {
+    font-size: clamp(4.15rem, 20vw, 5.75rem);
+  }
+
+  .ls-date {
+    margin-top: 9px;
+    font-size: 1rem;
+  }
+
+  .ls-user-section {
+    top: 58%;
+  }
+
+  .ls-avatar-ring {
+    width: 96px;
+    height: 96px;
+  }
+
+  .ls-bottom-bar {
+    padding-bottom: max(
+      18px,
+      env(safe-area-inset-bottom)
+    );
+  }
+}
+
+@media (max-height: 620px) and (min-width: 601px) {
+
+  .ls-clock-section {
+    top: 62px;
+  }
+
+  .ls-clock {
+    font-size: clamp(
+      4.25rem,
+      10vw,
+      6.5rem
+    );
+  }
+
+  .ls-user-section {
+    top: 62%;
+  }
+       }
