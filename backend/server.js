@@ -66,7 +66,24 @@ async function connectDatabase() {
   console.log(`MongoDB connected: database=${databaseName}`);
 }
 
-app.get('/health', (_req, res) => res.status(databaseStatus === 'connected' ? 200 : 503).json({ ok: databaseStatus === 'connected', service: 'kaalyug-chat', database: databaseStatus, error: databaseError }));
+app.get('/', (_req, res) => res.json({
+  service: 'Kaalyug OS Backend API',
+  status: 'online',
+  version: '2.0.0',
+  database: databaseStatus,
+  endpoints: {
+    health: '/health',
+    chat: 'POST /api/chat',
+    messages: 'GET,POST /api/messages'
+  }
+}));
+
+app.get('/health', (_req, res) => res.status(200).json({
+  ok: databaseStatus === 'connected',
+  service: 'kaalyug-chat',
+  database: databaseStatus,
+  error: databaseError
+}));
 
 // Yug AI chat endpoint — with retry for transient 503s
 app.post('/api/chat', async (req, res) => {
