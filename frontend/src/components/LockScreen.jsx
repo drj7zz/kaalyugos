@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import './LockScreen.css';
-import { ArrowRight, Wifi, Battery, Volume2, HelpCircle } from 'lucide-react';
+import { ArrowRight, Wifi, Battery, Volume2, HelpCircle, Lock } from 'lucide-react';
 
 const LockScreen = ({ onUnlock, onOpenAppOnUnlock }) => {
   const [time, setTime] = useState(new Date());
@@ -10,6 +10,7 @@ const LockScreen = ({ onUnlock, onOpenAppOnUnlock }) => {
   const [shake, setShake] = useState(false);
   const [showSupport, setShowSupport] = useState(false);
   const inputRef = useRef(null);
+
   const [username] = useState(() => {
     try {
       const savedAcc = JSON.parse(localStorage.getItem('kaalyug_account'));
@@ -32,7 +33,7 @@ const LockScreen = ({ onUnlock, onOpenAppOnUnlock }) => {
       if (targetAppId && onOpenAppOnUnlock) {
         onOpenAppOnUnlock(targetAppId);
       }
-    }, 400);
+    }, 380);
   }, [isUnlocking, onUnlock, onOpenAppOnUnlock]);
 
   const handleAvatarClick = () => {
@@ -80,10 +81,16 @@ const LockScreen = ({ onUnlock, onOpenAppOnUnlock }) => {
   const formatDate = (date) => date.toLocaleDateString([], { weekday: 'long', month: 'long', day: 'numeric' });
 
   return (
-    <div className={`lockscreen-container ${isUnlocking ? 'unlock-anim' : ''}`}
-      onClick={() => { if (!showPasswordField && !showSupport) { setShowPasswordField(true); setTimeout(() => inputRef.current?.focus(), 100); } }}
+    <div
+      className={`lockscreen-container ${isUnlocking ? 'unlock-anim' : ''}`}
+      onClick={() => {
+        if (!showPasswordField && !showSupport) {
+          setShowPasswordField(true);
+          setTimeout(() => inputRef.current?.focus(), 100);
+        }
+      }}
     >
-      {/* Wallpaper */}
+      {/* Background wallpaper */}
       <div className="lockscreen-bg" />
 
       {/* Liquid Glass animated blobs */}
@@ -94,7 +101,12 @@ const LockScreen = ({ onUnlock, onOpenAppOnUnlock }) => {
 
       {/* Top status bar */}
       <div className="ls-topbar">
-        <div className="ls-topbar-left" />
+        <div className="ls-topbar-left">
+          <span className="ls-brand-tag">
+            <Lock size={13} style={{ verticalAlign: 'middle', marginRight: 6 }} />
+            Kaalyug OS
+          </span>
+        </div>
         <div className="ls-topbar-right">
           <Wifi size={14} color="rgba(255,255,255,0.85)" />
           <Volume2 size={14} color="rgba(255,255,255,0.85)" />
@@ -102,18 +114,19 @@ const LockScreen = ({ onUnlock, onOpenAppOnUnlock }) => {
         </div>
       </div>
 
-      {/* Clock */}
+      {/* Clock & Date */}
       <div className="ls-clock-section">
         <div className="ls-clock">{formatTime(time)}</div>
         <div className="ls-date">{formatDate(time)}</div>
       </div>
 
-      {/* User section with liquid glass card */}
+      {/* User Login Section */}
       <div className="ls-user-section">
         <div className="ls-glass-card">
           <div
             className={`ls-avatar-ring ${showPasswordField ? 'focused' : ''}`}
             onClick={(e) => { e.stopPropagation(); handleAvatarClick(); }}
+            title="Click to sign in"
           >
             <img src="/avatar.svg" alt="User Avatar" className="ls-avatar-img" loading="eager" decoding="sync" fetchPriority="high" />
           </div>
@@ -133,19 +146,19 @@ const LockScreen = ({ onUnlock, onOpenAppOnUnlock }) => {
                   className="ls-password-input"
                   autoComplete="off"
                 />
-                <button type="submit" className="ls-password-btn">
+                <button type="submit" className="ls-password-btn" aria-label="Unlock">
                   <ArrowRight size={14} color="rgba(255,255,255,0.9)" />
                 </button>
               </div>
             </form>
             <button className="ls-skip-btn" onClick={(e) => { e.stopPropagation(); handleUnlockTrigger(); }}>
-              Use Touch ID
+              Sign In
             </button>
           </div>
 
           {/* Hint */}
           {!showPasswordField && (
-            <div className="ls-click-hint">Click to unlock</div>
+            <div className="ls-click-hint">Click or press Enter to unlock</div>
           )}
         </div>
       </div>
@@ -154,7 +167,7 @@ const LockScreen = ({ onUnlock, onOpenAppOnUnlock }) => {
       <div className="ls-bottom-bar">
         <button className="ls-bottom-btn" onClick={(e) => { e.stopPropagation(); setShowSupport(true); }}>
           <HelpCircle size={13} style={{ verticalAlign: 'middle', marginRight: 4 }} />
-          Help & Support
+          Help & Shortcuts
         </button>
       </div>
 
@@ -166,16 +179,16 @@ const LockScreen = ({ onUnlock, onOpenAppOnUnlock }) => {
             <p>Welcome to Kaalyug Web Operating System. Keyboard shortcuts & access guide:</p>
             <div className="ls-support-links">
               <div className="ls-support-link" style={{ cursor: 'default' }}>
-                <span className="ls-support-link-icon" style={{ background: 'rgba(10,132,255,0.22)' }}><HelpCircle size={18} color="#0A84FF" /></span>
+                <span className="ls-support-link-icon" style={{ background: 'rgba(0,120,212,0.22)' }}><HelpCircle size={18} color="#0078d4" /></span>
                 <span className="ls-support-link-info">
                   <span className="ls-support-link-name">Unlock Shortcut</span>
-                  <span className="ls-support-link-handle">Press Enter or click &quot;Use Touch ID&quot;</span>
+                  <span className="ls-support-link-handle">Press Enter or click &quot;Sign In&quot;</span>
                 </span>
               </div>
               <div className="ls-support-link" style={{ cursor: 'default' }}>
                 <span className="ls-support-link-icon" style={{ background: 'rgba(52,199,89,0.22)' }}><Wifi size={18} color="#34C759" /></span>
                 <span className="ls-support-link-info">
-                  <span className="ls-support-link-name">Spotlight Search</span>
+                  <span className="ls-support-link-name">Quick Search</span>
                   <span className="ls-support-link-handle">Press Ctrl + K (or Cmd + K) anytime</span>
                 </span>
               </div>

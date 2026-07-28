@@ -9,7 +9,8 @@ function App() {
     return savedState !== null ? JSON.parse(savedState) : true
   })
   const [theme, setTheme] = useState(() => {
-    return localStorage.getItem('kaalyug_theme') || 'dark'
+    const saved = localStorage.getItem('kaalyug_theme')
+    return (saved && saved !== 'pink') ? saved : 'dark'
   })
   const [initialAppToOpen, setInitialAppToOpen] = useState(null)
 
@@ -18,9 +19,22 @@ function App() {
   }, [isLocked])
 
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme)
-    localStorage.setItem('kaalyug_theme', theme)
+    const activeTheme = theme === 'pink' ? 'dark' : theme
+    document.documentElement.setAttribute('data-theme', activeTheme)
+    localStorage.setItem('kaalyug_theme', activeTheme)
   }, [theme])
+
+  useEffect(() => {
+    let savedWp = localStorage.getItem('kaalyug_wallpaper')
+    if (!savedWp || savedWp.includes('nothing')) {
+      savedWp = '/bg.jpeg'
+      localStorage.setItem('kaalyug_wallpaper', savedWp)
+    }
+    const bgElem = document.querySelector('.os-background')
+    if (bgElem) bgElem.style.backgroundImage = `url('${savedWp}')`
+    const lockBg = document.querySelector('.lockscreen-bg')
+    if (lockBg) lockBg.style.backgroundImage = `url('${savedWp}')`
+  }, [])
 
   const handleUnlock = () => setIsLocked(false)
   const handleOpenAppOnUnlock = (appId) => setInitialAppToOpen(appId)

@@ -85,7 +85,7 @@ const TerminalApp = ({ onOpenApp, theme, setTheme }) => {
           '  calc <expr>          Evaluate math expression (e.g. calc (100*4)/2)',
           '  top / ps             List active system tasks',
           '  open <app>           Launch an OS app (calc, notes, files, settings, etc.)',
-          '  theme <dark|blue|pink> Switch OS color theme',
+          '  theme <dark|blue>    Switch OS color theme',
           '  echo <text>          Print text to standard output',
           '  matrix               Wake up to the Kaalyug matrix',
           '  clear                Clear the terminal screen',
@@ -249,11 +249,11 @@ const TerminalApp = ({ onOpenApp, theme, setTheme }) => {
 
       case 'theme': {
         const chosen = argStr.toLowerCase();
-        if (['dark', 'blue', 'pink'].includes(chosen)) {
+        if (['dark', 'blue'].includes(chosen)) {
           if (setTheme) setTheme(chosen);
           result = `Theme set to '${chosen}'.`;
         } else {
-          result = 'Usage: theme <dark|blue|pink>';
+          result = 'Usage: theme <dark|blue>';
         }
         break;
       }

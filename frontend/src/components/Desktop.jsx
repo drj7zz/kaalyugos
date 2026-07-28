@@ -36,7 +36,7 @@ const desktopShortcuts = [
 const tutorialSteps = [
   {
     title: 'Welcome to Kaalyug OS',
-    body: 'Kaalyug OS is a complete web-based operating system. Featuring a floating window compositor, POSIX terminal shell, virtual file system, productivity apps, and native AI kernel.'
+    body: 'Kaalyug OS is a complete web-based operating system. Featuring a floating window compositor with Windows controls, POSIX terminal shell, virtual file system, productivity apps, and native AI kernel.'
   },
   {
     title: 'Productivity & System Apps',
@@ -44,11 +44,11 @@ const tutorialSteps = [
   },
   {
     title: 'Navigation & Windows',
-    body: '• Click any dock app to launch or minimize it.\n• Double-click any window titlebar to toggle fullscreen.\n• Drag window headers to reposition windows on your workspace.\n• Spotlight Search: Press Ctrl + K (or Cmd + K) anytime.\n• Lock Screen: Press Ctrl + L to lock.'
+    body: '• Click any dock app to launch or minimize it.\n• Double-click any window titlebar to toggle fullscreen.\n• Drag window headers to reposition windows on your workspace.\n• Windows controls: Minimize, Maximize/Restore, and Close on top right.\n• Quick Search: Press Ctrl + K (or Cmd + K) anytime.\n• Lock Screen: Press Ctrl + L to lock.'
   },
   {
     title: 'Customization & Settings',
-    body: '• Customize themes (Dark, Blue, Pink) and wallpapers in Settings.\n• Create multiple local accounts or continue as Administrator/Guest.\n• The Terminal supports "help", "neofetch", "open <app>", and "theme <name>".'
+    body: '• Customize themes (Dark, Blue) and wallpapers in Settings.\n• Create multiple local accounts or continue as Administrator/Guest.\n• The Terminal supports "help", "neofetch", "open <app>", and "theme <name>".'
   },
 ];
 
@@ -62,9 +62,10 @@ const Desktop = ({ theme, setTheme, onLock, initialAppToOpen, clearInitialApp })
   const [showNotifications, setShowNotifications] = useState(false);
   const [showTutorial, setShowTutorial] = useState(false);
   const [tutorialStep, setTutorialStep] = useState(0);
+
   const [notifications, setNotifications] = useState([
     { id: 1, title: 'Kaalyug OS', body: 'Welcome to Kaalyug OS v2.0 LTS', time: 'Just now', iconType: 'os' },
-    { id: 2, title: 'Tip', body: 'Press Ctrl/Cmd + K for Spotlight Search', time: 'Just now', iconType: 'tip' },
+    { id: 2, title: 'Tip', body: 'Press Ctrl/Cmd + K for Quick Search', time: 'Just now', iconType: 'tip' },
     { id: 3, title: 'Yug AI Core', body: 'Intelligent assistant is online and ready', time: 'Just now', iconType: 'ai' },
   ]);
   const [notifPermission, setNotifPermission] = useState(typeof Notification !== 'undefined' ? Notification.permission : 'default');
@@ -155,7 +156,7 @@ const Desktop = ({ theme, setTheme, onLock, initialAppToOpen, clearInitialApp })
   const searchableApps = apps.map(app => ({
     ...app,
     keywords: ({
-      sysinfo: 'about system info specifications hardware cpu memory kernel uptime os',
+      sysinfo: 'about system info specifications hardware cpu memory kernel uptime os specs',
       finder: 'files storage finder file manager documents folders disk explorer',
       terminal: 'terminal console shell bash cli posix neofetch commands',
       calculator: 'calculator math compute numbers scientific arithmetic',
@@ -163,7 +164,7 @@ const Desktop = ({ theme, setTheme, onLock, initialAppToOpen, clearInitialApp })
       activity: 'activity monitor task manager processes cpu memory usage kill tasks',
       browser: 'browser web internet surf google duckduckgo online',
       yug_ai: 'yug ai artificial intelligence assistant gemini chat help',
-      settings: 'settings appearance themes dark blue pink customization wallpaper',
+      settings: 'settings appearance themes dark blue customization wallpaper',
       snake: 'snake game arcade play retro highscore',
       messages: 'yug chat messages global community real time chat',
       accounts: 'accounts user profile login guest switch password credentials',
@@ -191,47 +192,51 @@ const Desktop = ({ theme, setTheme, onLock, initialAppToOpen, clearInitialApp })
 
   return (
     <div className="desktop-container">
-      {/* Menu Bar */}
-      <div className="menu-bar glass-panel">
+      {/* Top Menu / System Bar */}
+      <div className="menu-bar">
+        {/* Mobile top status bar */}
         <div className="mobile-status-bar">
           <span>{formatMobileTime(time)}</span>
-          <span className="dynamic-island" aria-label="Dynamic Island" />
-          <div>
-            <Wifi size={15} />
-            <Battery size={16} />
+          <span className="dynamic-island" aria-label="Status Notch" />
+          <div className="mobile-status-icons">
+            <Wifi size={14} />
+            <Battery size={15} />
             <button className="mobile-lock-button" onClick={onLock} aria-label="Lock screen" title="Lock screen">
-              <Lock size={15} />
+              <Lock size={14} />
             </button>
-            <button className="mobile-lock-button" onClick={toggleSearch} aria-label="Search applications" title="Search applications">
-              <Search size={15} />
+            <button className="mobile-lock-button" onClick={toggleSearch} aria-label="Search applications" title="Search">
+              <Search size={14} />
             </button>
           </div>
         </div>
+
+        {/* Desktop menu left */}
         <div className="menu-left">
-          <div className="apple-logo-img" title="Lock Screen" onClick={onLock}>
-            <img src="/bg.jpeg" alt="Logo" width={22} height={22} style={{ borderRadius: '50%', objectFit: 'cover' }} />
+          <div className="os-logo-img" title="Lock Screen (Ctrl+L)" onClick={onLock}>
+            <img src="/bg.jpeg" alt="Logo" width={20} height={20} style={{ borderRadius: '50%', objectFit: 'cover' }} />
           </div>
           <span className="menu-item fw-bold">Kaalyug OS</span>
-          <span className="menu-item">File</span>
-          <span className="menu-item">Edit</span>
           <span className="menu-item" onClick={() => handleMenuClick('View')}>View</span>
           <span className="menu-item" onClick={() => handleMenuClick('Settings')}>Settings</span>
           <span className="menu-item" onClick={() => handleMenuClick('Support')}>Help</span>
-          <span className="menu-item" onClick={() => handleMenuClick('Applications')}>Applications</span>
+          <span className="menu-item" onClick={() => handleMenuClick('Applications')}>Apps</span>
         </div>
+
+        {/* Desktop menu right */}
         <div className="menu-right">
-          <span className="menu-icon" onClick={toggleSearch} title="Search"><Search size={16} /></span>
+          <span className="menu-icon" onClick={toggleSearch} title="Quick Search (Ctrl+K)"><Search size={15} /></span>
           <span className="menu-icon" onClick={() => setShowNotifications(prev => !prev)} title="Notifications"><Bell size={15} /></span>
           <span className="menu-icon" onClick={() => { setShowTutorial(true); setTutorialStep(0); }} title="How to use"><Info size={15} /></span>
-          <span className="menu-icon" onClick={onLock} title="Lock Screen"><Lock size={15} /></span>
-          <span className="menu-icon"><Wifi size={16} /></span>
-          <span className="menu-icon"><Battery size={16} /></span>
+          <span className="menu-icon" onClick={onLock} title="Lock Screen (Ctrl+L)"><Lock size={15} /></span>
+          <span className="menu-icon" title="Wi-Fi Connected"><Wifi size={15} /></span>
+          <span className="menu-icon" title="Battery 100%"><Battery size={15} /></span>
           <span className="menu-time">{formatTime(time)}</span>
         </div>
       </div>
 
-      {/* Workspace & Shortcuts */}
+      {/* Workspace Area */}
       <div className="workspace">
+        {/* Desktop Shortcuts */}
         <div className="desktop-icons">
           {desktopShortcuts.map(shortcut => {
             const Icon = shortcut.icon;
@@ -239,7 +244,7 @@ const Desktop = ({ theme, setTheme, onLock, initialAppToOpen, clearInitialApp })
             return (
               <div key={shortcut.id} className="desktop-shortcut" onClick={() => openApp(fullApp)}>
                 <div className="shortcut-icon-wrapper">
-                  <Icon size={48} color="#007AFF" fill="rgba(0,122,255,0.2)" />
+                  <Icon size={46} color="#0078d4" fill="rgba(0,120,212,0.2)" />
                 </div>
                 <span className="shortcut-title">{shortcut.title}</span>
               </div>
@@ -247,21 +252,28 @@ const Desktop = ({ theme, setTheme, onLock, initialAppToOpen, clearInitialApp })
           })}
         </div>
 
+        {/* Mobile App Grid */}
         <div className="mobile-app-grid">
           {apps.filter(app => !['finder', 'applications'].includes(app.id)).map(app => {
             const Icon = app.icon;
             return (
               <button key={app.id} className="mobile-app" onClick={() => openApp(app)}>
                 <span className="mobile-app-icon" style={{ backgroundColor: app.color }}>
-                  <Icon size={29} color="#fff" />
+                  <Icon size={26} color="#fff" />
                 </span>
-                <span>{app.title}</span>
+                <span className="app-title">{app.title}</span>
               </button>
             );
           })}
-          <button className="mobile-app all-apps-button" onClick={() => openApp(apps.find(app => app.id === 'applications'))}><span className="mobile-app-icon" style={{ backgroundColor: '#34C759' }}><Grid2X2 size={29} color="#fff" /></span><span>Applications</span></button>
+          <button className="mobile-app all-apps-button" onClick={() => openApp(apps.find(app => app.id === 'applications'))}>
+            <span className="mobile-app-icon" style={{ backgroundColor: '#0078d4' }}>
+              <Grid2X2 size={26} color="#fff" />
+            </span>
+            <span className="app-title">Apps</span>
+          </button>
         </div>
 
+        {/* Open Windows */}
         {openWindows.map(app => (
           <Window
             key={app.id}
@@ -283,22 +295,38 @@ const Desktop = ({ theme, setTheme, onLock, initialAppToOpen, clearInitialApp })
           />
         ))}
 
-        {/* Spotlight Search Overlay */}
+        {/* Quick Search Overlay */}
         {showSearch && (
           <div className="spotlight-overlay" onClick={toggleSearch}>
             <div className="spotlight-container glass-panel" onClick={e => e.stopPropagation()}>
-              <Search size={24} color="#888" />
-              <input
-                type="text"
-                placeholder="Search Kaalyug OS..."
-                autoFocus
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-              {searchQuery && <div className="search-results">
-                {searchResults.length ? searchResults.map(app => { const Icon = app.icon; return <button key={app.id} onClick={() => { openApp(app); setShowSearch(false); }}><Icon size={18} /><span>{app.title}</span></button>; }) : <span className="search-empty">No applications found</span>}
-                <button className="web-search-result" onClick={() => window.open(`https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`, '_blank', 'noopener,noreferrer')}><Search size={18} /><span>Search the web for &quot;{searchQuery}&quot;</span></button>
-              </div>}
+              <div className="spotlight-input-row">
+                <Search size={20} color="#0078d4" />
+                <input
+                  type="text"
+                  placeholder="Search Kaalyug OS apps or web..."
+                  autoFocus
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+              </div>
+              {searchQuery && (
+                <div className="search-results">
+                  {searchResults.length ? searchResults.map(app => {
+                    const Icon = app.icon;
+                    return (
+                      <button key={app.id} className="search-res-item" onClick={() => { openApp(app); setShowSearch(false); }}>
+                        <span className="search-icon-circle"><Icon size={16} /></span>
+                        <span className="res-title">{app.title}</span>
+                        <span className="res-badge">Open</span>
+                      </button>
+                    );
+                  }) : <span className="search-empty">No application found</span>}
+                  <button className="web-search-result" onClick={() => window.open(`https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`, '_blank', 'noopener,noreferrer')}>
+                    <Search size={16} />
+                    <span>Search web for &quot;{searchQuery}&quot;</span>
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -307,42 +335,54 @@ const Desktop = ({ theme, setTheme, onLock, initialAppToOpen, clearInitialApp })
         {showNotifications && (
           <div className="notification-center glass-panel">
             <div className="notif-header">
-              <b>Notifications</b>
-              <div style={{display:'flex',alignItems:'center',gap:6}}>
-                {notifications.length > 0 && <button className="notif-clear-all" onClick={() => setNotifications([])}>Clear All</button>}
-                <button className="notif-dismiss" style={{position:'static'}} onClick={() => setShowNotifications(false)} title="Close"><X size={13} /></button>
+              <span className="notif-title">Notifications</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                {notifications.length > 0 && (
+                  <button className="notif-clear-all" onClick={() => setNotifications([])}>Clear</button>
+                )}
+                <button className="notif-dismiss" onClick={() => setShowNotifications(false)} title="Close">
+                  <X size={13} />
+                </button>
               </div>
             </div>
             {notifPermission !== 'granted' && (
               <div className="notif-permission-card">
-                <Bell size={18} />
+                <Bell size={18} color="#0078d4" />
                 <div>
                   <b>Enable Notifications</b>
-                  <p>Get alerts from Kaalyug OS</p>
+                  <p>Receive system alerts from Kaalyug OS</p>
                 </div>
-                <button onClick={requestNotifPermission}>{notifPermission === 'denied' ? 'Blocked' : 'Allow'}</button>
+                <button onClick={requestNotifPermission}>
+                  {notifPermission === 'denied' ? 'Blocked' : 'Allow'}
+                </button>
               </div>
             )}
-            {notifications.length === 0 && <p className="notif-empty">No notifications</p>}
+            {notifications.length === 0 && <p className="notif-empty">No new alerts</p>}
             {notifications.map(n => (
               <div key={n.id} className="notif-card">
-                <span className="notif-icon">{n.iconType === 'os' ? <Monitor size={16} /> : n.iconType === 'tip' ? <Info size={16} /> : <Sparkles size={16} />}</span>
+                <span className="notif-icon">
+                  {n.iconType === 'os' ? <Monitor size={15} /> : n.iconType === 'tip' ? <Info size={15} color="#0078d4" /> : <Sparkles size={15} />}
+                </span>
                 <div className="notif-body">
                   <b>{n.title}</b>
                   <span>{n.body}</span>
                   <small>{n.time}</small>
                 </div>
-                <button className="notif-dismiss" onClick={() => dismissNotification(n.id)}><X size={12} /></button>
+                <button className="notif-dismiss" onClick={() => dismissNotification(n.id)}>
+                  <X size={12} />
+                </button>
               </div>
             ))}
           </div>
         )}
 
-        {/* Tutorial Overlay */}
+        {/* Tutorial / Guide Overlay */}
         {showTutorial && (
           <div className="tutorial-overlay" onClick={() => setShowTutorial(false)}>
             <div className="tutorial-card glass-panel" onClick={e => e.stopPropagation()}>
-              <button className="tutorial-close" onClick={() => setShowTutorial(false)} title="Close"><X size={15} /></button>
+              <button className="tutorial-close" onClick={() => setShowTutorial(false)} title="Close">
+                <X size={15} />
+              </button>
               <div className="tutorial-step-indicator">
                 {tutorialSteps.map((_, i) => (
                   <span key={i} className={`tutorial-dot ${i === tutorialStep ? 'active' : ''}`} />
@@ -353,11 +393,19 @@ const Desktop = ({ theme, setTheme, onLock, initialAppToOpen, clearInitialApp })
                 {tutorialSteps[tutorialStep].body.split('\n').map((line, i) => <p key={i}>{line}</p>)}
               </div>
               <div className="tutorial-actions">
-                {tutorialStep > 0 && <button className="tutorial-btn-secondary" onClick={() => setTutorialStep(s => s - 1)}><ChevronLeft size={14} /> Back</button>}
+                {tutorialStep > 0 && (
+                  <button className="tutorial-btn-secondary" onClick={() => setTutorialStep(s => s - 1)}>
+                    <ChevronLeft size={14} /> Back
+                  </button>
+                )}
                 {tutorialStep < tutorialSteps.length - 1 ? (
-                  <button onClick={() => setTutorialStep(s => s + 1)}>Next <ChevronRight size={14} /></button>
+                  <button className="tutorial-btn-primary" onClick={() => setTutorialStep(s => s + 1)}>
+                    Next <ChevronRight size={14} />
+                  </button>
                 ) : (
-                  <button onClick={() => setShowTutorial(false)}>Got it ✓</button>
+                  <button className="tutorial-btn-primary" onClick={() => setShowTutorial(false)}>
+                    Got it ✓
+                  </button>
                 )}
               </div>
             </div>
@@ -365,21 +413,22 @@ const Desktop = ({ theme, setTheme, onLock, initialAppToOpen, clearInitialApp })
         )}
       </div>
 
-      {/* Dock */}
+      {/* Dock Launcher */}
       <div className={`dock-container ${activeWindow ? 'app-active' : ''}`}>
         <div className="dock glass-panel">
           {apps.map(app => {
             const Icon = app.icon;
             const isOpen = openWindows.find(w => w.id === app.id);
+            const isActive = activeWindow === app.id;
             return (
               <div
                 key={app.id}
-                className={`dock-item ${['finder', 'notes', 'terminal', 'calculator', 'browser', 'sysinfo'].includes(app.id) ? 'mobile-essential' : 'mobile-optional'} ${isOpen ? 'is-open' : ''}`}
+                className={`dock-item ${['finder', 'notes', 'terminal', 'calculator', 'browser', 'sysinfo'].includes(app.id) ? 'mobile-essential' : 'mobile-optional'} ${isOpen ? 'is-open' : ''} ${isActive ? 'is-active' : ''}`}
                 onClick={() => toggleApp(app)}
                 title={app.title}
               >
                 <div className="dock-icon" style={{ backgroundColor: app.color }}>
-                  <Icon size={24} color="#fff" />
+                  <Icon size={22} color="#fff" />
                 </div>
                 {isOpen && <div className="dock-indicator" />}
               </div>

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 
 /* ========== THEME TOKENS ========== */
 :root,
@@ -6,57 +6,59 @@
   --text-primary: #ffffff;
   --text-secondary: rgba(255, 255, 255, 0.80);
   --text-muted: rgba(255, 255, 255, 0.55);
-  --glass-bg: rgba(28, 28, 30, 0.55);
-  --glass-header: rgba(255, 255, 255, 0.10);
-  --glass-border: rgba(255, 255, 255, 0.15);
-  --glass-blur: blur(16px);
-  --dock-bg: rgba(255, 255, 255, 0.14);
-  --accent: #0A84FF;
-  --accent-soft: rgba(10, 132, 255, 0.20);
+  --glass-bg: rgba(20, 24, 38, 0.75);
+  --glass-header: rgba(15, 20, 32, 0.88);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-blur: blur(20px);
+  --dock-bg: rgba(15, 20, 35, 0.80);
+  --accent: #0078d4;
+  --accent-soft: rgba(0, 120, 212, 0.22);
+  --card-bg: rgba(20, 26, 42, 0.85);
   --shortcut-text: #ffffff;
-  --shortcut-shadow: rgba(0, 0, 0, 0.85);
-  /* Solid opaque bg for fullscreen windows */
-  --window-solid-bg: #1c1c1e;
+  --shortcut-shadow: 0 1px 6px rgba(0, 0, 0, 0.85);
+  --window-solid-bg: #141824;
+}
+
+[data-theme='white'],
+[data-theme='light'] {
+  --text-primary: #181c24;
+  --text-secondary: rgba(24, 28, 36, 0.78);
+  --text-muted: rgba(24, 28, 36, 0.52);
+  --glass-bg: rgba(245, 247, 252, 0.86);
+  --glass-header: rgba(255, 255, 255, 0.92);
+  --glass-border: rgba(0, 0, 0, 0.12);
+  --glass-blur: blur(20px);
+  --dock-bg: rgba(240, 243, 250, 0.88);
+  --accent: #0078d4;
+  --accent-soft: rgba(0, 120, 212, 0.16);
+  --card-bg: rgba(255, 255, 255, 0.92);
+  --shortcut-text: #181c24;
+  --shortcut-shadow: none;
+  --window-solid-bg: #f8fafc;
 }
 
 [data-theme='blue'] {
   --text-primary: #ffffff;
   --text-secondary: rgba(255, 255, 255, 0.85);
   --text-muted: rgba(255, 255, 255, 0.55);
-  --glass-bg: rgba(0, 50, 110, 0.50);
-  --glass-header: rgba(100, 180, 255, 0.14);
-  --glass-border: rgba(100, 200, 255, 0.28);
-  --glass-blur: blur(16px);
-  --dock-bg: rgba(0, 80, 180, 0.35);
-  --accent: #64D2FF;
-  --accent-soft: rgba(100, 210, 255, 0.20);
+  --glass-bg: rgba(10, 22, 38, 0.84);
+  --glass-header: rgba(14, 32, 54, 0.90);
+  --glass-border: rgba(100, 200, 255, 0.25);
+  --glass-blur: blur(20px);
+  --dock-bg: rgba(12, 28, 48, 0.88);
+  --accent: #00d2ff;
+  --accent-soft: rgba(0, 210, 255, 0.20);
+  --card-bg: rgba(14, 30, 50, 0.88);
   --shortcut-text: #ffffff;
-  --shortcut-shadow: rgba(0, 0, 40, 0.9);
-  --window-solid-bg: #001a40;
-}
-
-[data-theme='pink'] {
-  --text-primary: #3d0028;
-  --text-secondary: rgba(61, 0, 40, 0.80);
-  --text-muted: rgba(61, 0, 40, 0.55);
-  --glass-bg: rgba(255, 210, 230, 0.52);
-  --glass-header: rgba(255, 230, 242, 0.42);
-  --glass-border: rgba(200, 60, 120, 0.25);
-  --glass-blur: blur(16px);
-  --dock-bg: rgba(255, 160, 210, 0.35);
-  --accent: #b5005e;
-  --accent-soft: rgba(181, 0, 94, 0.15);
-  /* Folder icons on desktop: keep white text with shadow for readability */
-  --shortcut-text: #ffffff;
-  --shortcut-shadow: rgba(80, 0, 40, 0.95);
-  --window-solid-bg: #fce8f3;
+  --shortcut-shadow: 0 1px 6px rgba(0, 0, 30, 0.9);
+  --window-solid-bg: #081628;
 }
 
 /* ========== BASE ========== */
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Figtree', -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -92,18 +94,19 @@ img {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  background-color: #0b1020;
   z-index: 0;
 }
 
 /* ─── LOCK SCREEN BACKGROUND ─────────────────── */
-/* The lock screen uses its own full-cover bg with blur — no separate element needed */
 .lockscreen-bg {
   position: fixed;
   inset: 0;
   background-image: url('/bg.jpeg');
   background-size: cover;
   background-position: center;
-  filter: brightness(0.72);
+  background-color: #0b1020;
+  filter: brightness(0.85);
   transform: none;
   transform-origin: center;
   z-index: 0;

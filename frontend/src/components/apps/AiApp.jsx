@@ -18,7 +18,7 @@ const OFFLINE_KNOWLEDGE = {
 - **Interactive Calculator**: Full standard & scientific calculations.
 - **POSIX Shell Terminal**: Over 18 commands including \`neofetch\`, \`top\`, \`ls\`, \`cat\`, \`calc\`.
 - **Activity Monitor**: Live CPU/RAM telemetry and process management.
-- **Customizable Themes & Wallpapers**: Dark, Blue, and Pink glass styling.`,
+- **Customizable Themes & Wallpapers**: Dark and Blue glass styling.`,
 
   terminal: `The **Kaalyug Terminal** supports rich POSIX-like commands:
 - \`neofetch\` — OS telemetry and ASCII art banner
@@ -27,7 +27,7 @@ const OFFLINE_KNOWLEDGE = {
 - \`calc <expr>\` — Calculate expressions (e.g. \`calc (25*4)/2\`)
 - \`top\` or \`ps\` — Active process list
 - \`open <app>\` — Launch any desktop app
-- \`theme <dark|blue|pink>\` — Switch visual theme
+- \`theme <dark|blue>\` — Switch visual theme
 - \`clear\`, \`date\`, \`whoami\`, \`uname -a\`, \`uptime\`, \`matrix\``,
 
   notes: `To manage files and notes:

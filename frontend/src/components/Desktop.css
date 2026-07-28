@@ -7,6 +7,9 @@
   overflow: hidden;
   animation: fadeIn 0.4s ease;
   -webkit-tap-highlight-color: transparent;
+  color: var(--text-primary);
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 @keyframes fadeIn {
@@ -14,9 +17,9 @@
   to { opacity: 1; }
 }
 
-/* Menu Bar */
+/* Top System Menu Bar */
 .menu-bar {
-  height: 28px;
+  height: 32px;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -35,7 +38,7 @@
 .menu-left, .menu-right {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
 }
 
 .mobile-status-bar,
@@ -44,14 +47,14 @@
 }
 .mobile-only-dock-item { display: none; }
 
-.apple-logo-img {
+.os-logo-img {
   display: flex;
   align-items: center;
   cursor: pointer;
   transition: transform 0.2s ease;
 }
 
-.apple-logo-img img {
+.os-logo-img img {
   display: block;
   width: 22px;
   height: 22px;
@@ -60,46 +63,50 @@
   overflow: hidden;
 }
 
-.apple-logo-img:hover {
+.os-logo-img:hover {
   transform: scale(1.1);
 }
 
-/* Navbar Menu Items: Clean scale, zero glow, zero heavy background box */
+/* Navbar Menu Items */
 .menu-item {
   cursor: pointer;
-  padding: 2px 4px;
-  transition: transform 0.15s ease, opacity 0.15s ease;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: background 0.15s ease, opacity 0.15s ease;
   user-select: none;
-  background: transparent !important;
-  text-shadow: none !important;
+  font-size: 12px;
+  color: var(--text-secondary);
 }
 
 .menu-item:hover {
-  background: transparent !important;
-  transform: translateY(-1px);
-  opacity: 0.9;
-  text-shadow: none !important;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
 }
 
 .fw-bold {
   font-weight: 600;
+  color: var(--text-primary);
 }
 
 .menu-icon {
   display: flex;
   align-items: center;
   cursor: pointer;
-  padding: 2px;
-  transition: transform 0.15s ease;
-  background: transparent !important;
+  padding: 4px;
+  border-radius: 6px;
+  transition: background 0.15s ease, transform 0.15s ease;
+  color: var(--text-secondary);
 }
 
 .menu-icon:hover {
-  background: transparent !important;
-  transform: scale(1.1);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+  transform: scale(1.08);
 }
 
 .menu-time {
+  font-size: 12px;
+  color: var(--text-primary);
   font-variant-numeric: tabular-nums;
 }
 
@@ -107,17 +114,21 @@
 .workspace {
   flex: 1;
   position: relative;
-  padding: 20px;
-  padding-bottom: 92px;
+  padding: 20px 24px 92px;
   min-height: 0;
+  overflow: hidden;
 }
 
-/* Desktop Icons: Clean Icon Pop-up Effect without glow */
+/* Desktop Shortcuts */
 .desktop-icons {
-  display: none;
+  display: flex;
   flex-direction: column;
-  gap: 24px;
-  width: 100px;
+  gap: 20px;
+  width: 90px;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 2;
 }
 
 .desktop-shortcut {
@@ -133,37 +144,48 @@
 }
 
 .shortcut-icon-wrapper {
-  width: 60px;
-  height: 60px;
+  width: 56px;
+  height: 56px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.2s ease;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
 }
 
 .desktop-shortcut:hover .shortcut-icon-wrapper {
-  transform: scale(1.12) translateY(-2px);
+  transform: scale(1.08) translateY(-2px);
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
 }
 
 .shortcut-title {
   color: var(--shortcut-text, #ffffff);
   font-size: 12px;
   text-align: center;
-  font-weight: 600;
-  padding: 2px 4px;
-  transition: transform 0.2s ease;
-  background: transparent !important;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6) !important;
+  font-weight: 500;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+  text-shadow: var(--shortcut-shadow, 0 1px 3px rgba(0, 0, 0, 0.8));
 }
 
 .desktop-shortcut:hover .shortcut-title {
-  background: transparent !important;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.85) !important;
+  background: rgba(0, 0, 0, 0.35);
 }
 
 .desktop-shortcut:active {
   transform: scale(0.96);
 }
+
+
+
+
 
 /* Dock */
 .dock-container {

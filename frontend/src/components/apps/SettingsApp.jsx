@@ -54,12 +54,6 @@ const SettingsApp = ({ theme, setTheme }) => {
           >
             Blue Horizon
           </button>
-          <button
-            className={theme === 'pink' ? 'active-theme' : ''}
-            onClick={() => setTheme('pink')}
-          >
-            Neon Orchid
-          </button>
         </div>
       </div>
 

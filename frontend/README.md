@@ -25,7 +25,7 @@
 
 **Kaalyug OS** is an interactive, browser-based operating system designed to blur the boundary between web applications and desktop computing. Powered by **React 19**, **Vite**, **Express**, **MongoDB Atlas**, and **Google Gemini AI**, Kaalyug OS delivers a window compositor, a POSIX-compliant terminal shell, a virtual file system, native productivity applications, and an integrated AI intelligence core.
 
-Whether accessed from a 4K desktop monitor or an iPhone touchscreen, Kaalyug OS dynamically morphs its interface to offer the optimal experience: a multi-window macOS desktop with a frosted dock on large displays, and a gesture-driven iOS bottom-sheet interface on mobile.
+Whether accessed from a 4K desktop monitor or an iPhone touchscreen, Kaalyug OS dynamically morphs its interface to offer the optimal experience: a multi-window web desktop with Windows window controls and a frosted dock on large displays, and a gesture-driven mobile interface on phones.
 
 ---
 
@@ -33,13 +33,13 @@ Whether accessed from a 4K desktop monitor or an iPhone touchscreen, Kaalyug OS 
 
 Kaalyug OS detects screen geometry and touch capabilities in real time, seamlessly adapting the interaction model:
 
-| Interface Metric | 🖥️ macOS Desktop View (> 768px) | 📱 iOS Mobile Experience (<= 768px) |
+| Interface Metric | 🖥️ Desktop Web View (> 768px) | 📱 Mobile Experience (<= 768px) |
 |---|---|---|
 | **Window Compositor** | Floating, draggable, resizable `react-rnd` windows | Full-viewport bottom sheets with drag handles |
-| **Window Controls** | Traffic-light controls (Close, Minimize, Maximize) | Top grab handle + touch swipe-down to dismiss |
+| **Window Controls** | Windows-style controls (Minimize, Maximize/Restore, Close) | Top grab handle + touch dismiss |
 | **App Navigation** | Glassmorphic floating dock with hover magnification | Bottom quick-dock & swipeable app grid |
-| **System Bar** | Top macOS menu bar with live clock, battery, Wi-Fi | iOS-style consolidated status header |
-| **Quick Launcher** | Spotlight search bar triggered by `⌘K` or `Ctrl+K` | Fullscreen quick-search drawer |
+| **System Bar** | Top system menu bar with live clock, battery, Wi-Fi | Consolidated mobile status header |
+| **Quick Launcher** | Quick search bar triggered by `⌘K` or `Ctrl+K` | Fullscreen quick-search drawer |
 | **Lock Screen** | Frosted glass liquid blobs + click-to-unlock | Touch-friendly glass unlock slider & tap prompt |
 
 ---
@@ -86,7 +86,7 @@ frontend/src/components/apps/
   - `whoami` — Print current user and session privilege
   - `date` — Print current system timestamp
   - `echo <text>` — Echo string to standard output
-  - `theme <dark|blue|pink>` — Change the desktop theme via command line
+  - `theme <dark|blue>` — Change the desktop theme via command line
   - `open <app_id>` — Launch any GUI application from the shell
   - `calc <expr>` — Quick arithmetic evaluator
   - `sysinfo` — Display system telemetry
@@ -115,8 +115,8 @@ frontend/src/components/apps/
 ### 9. ⚙️ Settings (`SettingsApp.jsx`)
 - Live theme switching between:
   - **Dark / Midnight** (default sleek glassmorphism)
+  - **Midnight Dark** (deep AMOLED black with crisp contrast)
   - **Cyberpunk Cobalt** (deep neon blue accents)
-  - **Vaporwave Pink** (magenta & violet glow)
 - Wallpaper selector and sound toggle preferences saved directly to `localStorage`.
 
 ### 10. 🎮 Retro Snake (`SnakeApp.jsx`)
@@ -176,8 +176,8 @@ graph TB
 ```mermaid
 flowchart TD
     Start([User Visits URL]) --> Detect{Device Viewport?}
-    Detect -->|Desktop > 768px| DeskMode[Load macOS Windowing Shell]
-    Detect -->|Mobile <= 768px| MobMode[Load iOS Bottom-Sheet Shell]
+    Detect -->|Desktop > 768px| DeskMode[Load Windows Windowing Shell]
+    Detect -->|Mobile <= 768px| MobMode[Load Mobile Bottom-Sheet Shell]
 
     DeskMode --> Lock[LockScreen: Frosted Glass & Time Widget]
     MobMode --> Lock

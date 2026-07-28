@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Rnd } from 'react-rnd';
 import './Window.css';
-import { X, Minus, Plus } from 'lucide-react';
+import { X, Minus, Square, Copy } from 'lucide-react';
 
 import SystemInfoApp from './apps/SystemInfoApp';
 import FileManagerApp from './apps/FileManagerApp';
@@ -28,6 +28,7 @@ const Window = ({ app, isActive, onFocus, onClose, onMinimize, isMinimized, them
   const desktopWidth = Math.min(680, window.innerWidth - 48);
   const desktopHeight = Math.min(520, window.innerHeight - 76);
   const [isFullScreen, setIsFullScreen] = useState(window.innerWidth <= 768);
+  const AppIcon = app.icon;
 
   const toggleFullScreen = () => setIsFullScreen(!isFullScreen);
 
@@ -88,20 +89,41 @@ const Window = ({ app, isActive, onFocus, onClose, onMinimize, isMinimized, them
     >
       <div className="window-inner">
         {isMobile && <div className="ios-drag-handle" />}
-        <div className="window-header" onDoubleClick={toggleFullScreen}>
-          <div className="window-controls">
-            <button className="control-btn close" onClick={(e) => { e.stopPropagation(); onClose(); }} title="Close">
-              <X size={8} strokeWidth={3} />
+        <div className="window-header windows-header" onDoubleClick={toggleFullScreen}>
+          <div className="window-title-bar">
+            {AppIcon && <AppIcon size={14} className="window-app-icon" />}
+            <span className="window-title">{app.title}</span>
+          </div>
+          <div className="windows-controls">
+            <button
+              className="win-btn win-minimize"
+              onClick={(e) => { e.stopPropagation(); if (onMinimize) onMinimize(); }}
+              title="Minimize"
+              aria-label="Minimize"
+            >
+              <Minus size={13} strokeWidth={1.8} />
             </button>
-            <button className="control-btn minimize" onClick={(e) => { e.stopPropagation(); if (onMinimize) onMinimize(); }} title="Minimize">
-              <Minus size={8} strokeWidth={3} />
+            <button
+              className="win-btn win-maximize"
+              onClick={(e) => { e.stopPropagation(); toggleFullScreen(); }}
+              title={isFullScreen ? "Restore Down" : "Maximize"}
+              aria-label={isFullScreen ? "Restore Down" : "Maximize"}
+            >
+              {isFullScreen ? (
+                <Copy size={11} strokeWidth={1.8} />
+              ) : (
+                <Square size={11} strokeWidth={1.8} />
+              )}
             </button>
-            <button className="control-btn maximize" onClick={(e) => { e.stopPropagation(); toggleFullScreen(); }} title="Maximize">
-              <Plus size={8} strokeWidth={3} />
+            <button
+              className="win-btn win-close"
+              onClick={(e) => { e.stopPropagation(); onClose(); }}
+              title="Close"
+              aria-label="Close"
+            >
+              <X size={14} strokeWidth={1.8} />
             </button>
           </div>
-          <div className="window-title">{app.title}</div>
-          <div className="window-spacer"></div>
         </div>
         <div className="window-content">
           {renderContent()}

@@ -40,7 +40,7 @@ Escape: Dismiss search, notifications, or dialogs
 6. Browser: Embedded web browser and URL runner.
 7. Yug AI: Native conversational intelligence engine.
 8. Yug Chat: Global real-time community chat.
-9. Settings: Appearance, themes (Dark, Blue, Pink), system preferences.
+9. Settings: Appearance, themes (Dark, Blue), system preferences.
 10. Snake: Arcade retro game.
 `;
 const YUG_AI_SYSTEM = `You are Yug AI, the native AI assistant and intelligence core of Kaalyug OS.
