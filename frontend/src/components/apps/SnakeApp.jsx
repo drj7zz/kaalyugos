@@ -188,29 +188,67 @@ const SnakeApp = () => {
           <span>Score: <b>{score}</b></span>
           <span>Best: <b>{highScore}</b></span>
         </div>
-        <button className="snake-reset-btn" onClick={resetGame}>
+        <button className="snake-reset-btn" onClick={resetGame} title="Restart Game">
           <RotateCcw size={13} /> Restart
         </button>
       </div>
 
-      <canvas ref={canvasRef} width={400} height={320} className="snake-canvas" />
+      <canvas ref={canvasRef} width={400} height={300} className="snake-canvas" />
 
-      {/* Mobile D-pad */}
-      <div className="snake-dpad">
-        <button className="dpad-btn dpad-up" onPointerDown={() => handleDpad({ x: 0, y: -1 })}>
-          <ArrowUp size={18} />
+      {/* Controls guide for PC keyboard users */}
+      <div className="snake-controls-guide">
+        <span><span className="snake-key-badge">W</span> or <span className="snake-key-badge">↑</span> Up</span>
+        <span><span className="snake-key-badge">A</span> or <span className="snake-key-badge">←</span> Left</span>
+        <span><span className="snake-key-badge">S</span> or <span className="snake-key-badge">↓</span> Down</span>
+        <span><span className="snake-key-badge">D</span> or <span className="snake-key-badge">→</span> Right</span>
+        <span><span className="snake-key-badge">Enter</span> Restart</span>
+      </div>
+
+      {/* Universal D-Pad for both PC Mouse & Mobile Touch */}
+      <div className="snake-dpad" aria-label="Game Directional Pad">
+        <button
+          className="dpad-btn dpad-up"
+          onClick={() => handleDpad({ x: 0, y: -1 })}
+          onPointerDown={() => handleDpad({ x: 0, y: -1 })}
+          aria-label="Move Up"
+          title="Move Up (W or Up Arrow)"
+        >
+          <ArrowUp size={20} />
         </button>
         <div className="dpad-row">
-          <button className="dpad-btn dpad-left" onPointerDown={() => handleDpad({ x: -1, y: 0 })}>
-            <ArrowLeft size={18} />
+          <button
+            className="dpad-btn dpad-left"
+            onClick={() => handleDpad({ x: -1, y: 0 })}
+            onPointerDown={() => handleDpad({ x: -1, y: 0 })}
+            aria-label="Move Left"
+            title="Move Left (A or Left Arrow)"
+          >
+            <ArrowLeft size={20} />
           </button>
-          <div className="dpad-center" />
-          <button className="dpad-btn dpad-right" onPointerDown={() => handleDpad({ x: 1, y: 0 })}>
-            <ArrowRight size={18} />
+          <button
+            className="dpad-center"
+            onClick={resetGame}
+            title="Restart Game (Center button or Enter)"
+            aria-label="Restart Game"
+          />
+          <button
+            className="dpad-btn dpad-right"
+            onClick={() => handleDpad({ x: 1, y: 0 })}
+            onPointerDown={() => handleDpad({ x: 1, y: 0 })}
+            aria-label="Move Right"
+            title="Move Right (D or Right Arrow)"
+          >
+            <ArrowRight size={20} />
           </button>
         </div>
-        <button className="dpad-btn dpad-down" onPointerDown={() => handleDpad({ x: 0, y: 1 })}>
-          <ArrowDown size={18} />
+        <button
+          className="dpad-btn dpad-down"
+          onClick={() => handleDpad({ x: 0, y: 1 })}
+          onPointerDown={() => handleDpad({ x: 0, y: 1 })}
+          aria-label="Move Down"
+          title="Move Down (S or Down Arrow)"
+        >
+          <ArrowDown size={20} />
         </button>
       </div>
     </div>

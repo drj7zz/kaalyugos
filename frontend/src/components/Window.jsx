@@ -17,6 +17,7 @@ import CommunityChatApp from './apps/CommunityChatApp';
 import AccountsApp from './apps/AccountsApp';
 import SupportApp from './apps/SupportApp';
 import ApplicationsApp from './apps/ApplicationsApp';
+import ClockApp from './apps/ClockApp';
 
 const Window = ({ app, isActive, onFocus, onClose, onMinimize, isMinimized, theme, setTheme, onOpenApp }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -62,6 +63,8 @@ const Window = ({ app, isActive, onFocus, onClose, onMinimize, isMinimized, them
         return <SupportApp />;
       case 'applications':
         return <ApplicationsApp onOpenApp={onOpenApp} />;
+      case 'clock':
+        return <ClockApp />;
       default:
         return <SystemInfoApp onOpenApp={onOpenApp} />;
     }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import './LockScreen.css';
-import { ArrowRight, Wifi, Battery, Volume2, HelpCircle, Lock } from 'lucide-react';
+import { ArrowRight, Wifi, Battery, Volume2, HelpCircle, Lock, CloudSun, ShieldCheck, Zap, Camera } from 'lucide-react';
 
 const LockScreen = ({ onUnlock, onOpenAppOnUnlock }) => {
   const [time, setTime] = useState(new Date());
@@ -9,6 +9,7 @@ const LockScreen = ({ onUnlock, onOpenAppOnUnlock }) => {
   const [password, setPassword] = useState('');
   const [shake, setShake] = useState(false);
   const [showSupport, setShowSupport] = useState(false);
+  const [flashlightOn, setFlashlightOn] = useState(false);
   const inputRef = useRef(null);
 
   const [username] = useState(() => {
@@ -114,10 +115,33 @@ const LockScreen = ({ onUnlock, onOpenAppOnUnlock }) => {
         </div>
       </div>
 
-      {/* Clock & Date */}
+      {/* Clock, Date & Minimal Widgets */}
       <div className="ls-clock-section">
-        <div className="ls-clock">{formatTime(time)}</div>
+        <div className="ls-clock">
+          {formatTime(time)}
+          <span className="ls-clock-accent-dot" />
+        </div>
         <div className="ls-date">{formatDate(time)}</div>
+
+        {/* Minimalist System Widgets */}
+        <div className="ls-widgets-row">
+          <div className="ls-widget-pill" title="Local Weather">
+            <CloudSun size={13} color="rgba(255,255,255,0.9)" />
+            <span className="ls-widget-dot-text">24°C</span>
+            <span className="ls-widget-sub">Clear</span>
+          </div>
+
+          <div className="ls-widget-pill" title="Battery & Power">
+            <Battery size={13} color="rgba(255,255,255,0.9)" />
+            <span className="ls-widget-dot-text">98%</span>
+            <span className="ls-widget-status-dot" />
+          </div>
+
+          <div className="ls-widget-pill ls-widget-secure" title="System Security">
+            <ShieldCheck size={13} color="#34C759" />
+            <span className="ls-widget-dot-text">ACTIVE</span>
+          </div>
+        </div>
       </div>
 
       {/* User Login Section */}
@@ -163,11 +187,35 @@ const LockScreen = ({ onUnlock, onOpenAppOnUnlock }) => {
         </div>
       </div>
 
-      {/* Bottom bar */}
+      {/* Bottom bar with quick action buttons */}
       <div className="ls-bottom-bar">
+        <button
+          className={`ls-corner-btn ${flashlightOn ? 'active' : ''}`}
+          onClick={(e) => {
+            e.stopPropagation();
+            setFlashlightOn(!flashlightOn);
+          }}
+          title={flashlightOn ? 'Turn Flashlight Off' : 'Turn Flashlight On'}
+          aria-label="Toggle Flashlight"
+        >
+          <Zap size={16} color={flashlightOn ? '#ffcc00' : 'rgba(255,255,255,0.85)'} />
+        </button>
+
         <button className="ls-bottom-btn" onClick={(e) => { e.stopPropagation(); setShowSupport(true); }}>
           <HelpCircle size={13} style={{ verticalAlign: 'middle', marginRight: 4 }} />
           Help & Shortcuts
+        </button>
+
+        <button
+          className="ls-corner-btn"
+          onClick={(e) => {
+            e.stopPropagation();
+            handleUnlockTrigger('notes');
+          }}
+          title="Quick Notes"
+          aria-label="Open Notes"
+        >
+          <Camera size={16} color="rgba(255,255,255,0.85)" />
         </button>
       </div>
 

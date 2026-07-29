@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { HelpCircle, BookOpen, Command, ShieldCheck, Send, CheckCircle } from 'lucide-react';
+import { HelpCircle, BookOpen, Command, ShieldCheck, Send, CheckCircle, Code, GitPullRequest, Globe, ExternalLink } from 'lucide-react';
 
 const SHORTCUTS = [
   { key: 'Ctrl / Cmd + K', action: 'Spotlight Search — instantly search and launch any app' },
@@ -46,6 +46,49 @@ const SupportApp = () => {
               <span className="shortcut-action-desc">{s.action}</span>
             </div>
           ))}
+        </div>
+      </div>
+
+      <div className="info-grid">
+        {/* Developer Section */}
+        <div className="info-card">
+          <h3><Code size={18} color="#0078d4" /> Developer</h3>
+          <p style={{ margin: '6px 0 10px', fontSize: '13px', color: 'var(--text-secondary)' }}>
+            Engineered with passion by <b>Dirghraj Giri (drj7zz)</b>. Explore projects, design systems, and software portfolios:
+          </p>
+          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginTop: '10px' }}>
+            <button
+              className="sysinfo-action-btn"
+              onClick={() => window.open('https://drj7zz.vercel.app', '_blank', 'noopener,noreferrer')}
+              title="Visit Developer Portfolio"
+            >
+              <Globe size={14} /> drj7zz.vercel.app ↗
+            </button>
+          </div>
+        </div>
+
+        {/* Contribute Section */}
+        <div className="info-card">
+          <h3><GitPullRequest size={18} color="#30D158" /> Contribute</h3>
+          <p style={{ margin: '6px 0 10px', fontSize: '13px', color: 'var(--text-secondary)' }}>
+            Kaalyug OS is open-source. Contributions, pull requests, and bug reports are warmly welcomed:
+          </p>
+          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginTop: '10px' }}>
+            <button
+              className="sysinfo-secondary-btn"
+              onClick={() => window.open('https://github.com/drj7zz/kaalyugos', '_blank', 'noopener,noreferrer')}
+              title="Open GitHub Repository"
+            >
+              <ExternalLink size={14} /> github.com/drj7zz/kaalyugos ↗
+            </button>
+            <button
+              className="sysinfo-secondary-btn"
+              onClick={() => window.open('https://github.com/drj7zz/kaalyugos/pulls', '_blank', 'noopener,noreferrer')}
+              title="Submit Pull Request"
+            >
+              <GitPullRequest size={14} /> Submit PR
+            </button>
+          </div>
         </div>
       </div>
 

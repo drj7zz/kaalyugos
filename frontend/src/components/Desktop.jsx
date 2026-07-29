@@ -4,7 +4,7 @@ import {
   Wifi, Battery, Search, Folder, Files, Grid2X2, Settings,
   Lock, HelpCircle, Globe, Terminal, MessageCircle, Sparkles, Bell,
   Info, Gamepad2, Users, X, ChevronRight, ChevronLeft, Monitor,
-  Calculator, FileText, Activity
+  Calculator, FileText, Activity, CloudSun, Cpu, Clock
 } from 'lucide-react';
 import Window from './Window';
 
@@ -23,6 +23,7 @@ const apps = [
   { id: 'accounts', title: 'Accounts', icon: Users, color: '#64D2FF' },
   { id: 'support', title: 'Help & Docs', icon: HelpCircle, color: '#E056FD' },
   { id: 'applications', title: 'Applications', icon: Grid2X2, color: '#5856D6' },
+  { id: 'clock', title: 'Clock & Timer', icon: Clock, color: '#FF3B30' },
 ];
 
 const desktopShortcuts = [
@@ -170,6 +171,7 @@ const Desktop = ({ theme, setTheme, onLock, initialAppToOpen, clearInitialApp })
       accounts: 'accounts user profile login guest switch password credentials',
       support: 'support help documentation faq shortcuts guide customer care',
       applications: 'applications app library all apps grid launcher',
+      clock: 'clock timer stopwatch world time alarms hours minutes seconds',
     }[app.id] || app.title).toLowerCase(),
   }));
   const searchResults = searchableApps.filter(app => app.keywords.toLowerCase().includes(searchQuery.toLowerCase()));
@@ -196,7 +198,13 @@ const Desktop = ({ theme, setTheme, onLock, initialAppToOpen, clearInitialApp })
       <div className="menu-bar">
         {/* Mobile top status bar */}
         <div className="mobile-status-bar">
-          <span>{formatMobileTime(time)}</span>
+          <span
+            onClick={() => openApp(apps.find(a => a.id === 'clock'))}
+            style={{ cursor: 'pointer' }}
+            title="Open Clock & Timer"
+          >
+            {formatMobileTime(time)}
+          </span>
           <span className="dynamic-island" aria-label="Status Notch" />
           <div className="mobile-status-icons">
             <Wifi size={14} />
@@ -230,7 +238,13 @@ const Desktop = ({ theme, setTheme, onLock, initialAppToOpen, clearInitialApp })
           <span className="menu-icon" onClick={onLock} title="Lock Screen (Ctrl+L)"><Lock size={15} /></span>
           <span className="menu-icon" title="Wi-Fi Connected"><Wifi size={15} /></span>
           <span className="menu-icon" title="Battery 100%"><Battery size={15} /></span>
-          <span className="menu-time">{formatTime(time)}</span>
+          <span
+            className="menu-time"
+            onClick={() => openApp(apps.find(a => a.id === 'clock'))}
+            title="Open Clock & Timer"
+          >
+            {formatTime(time)}
+          </span>
         </div>
       </div>
 
@@ -250,6 +264,90 @@ const Desktop = ({ theme, setTheme, onLock, initialAppToOpen, clearInitialApp })
               </div>
             );
           })}
+        </div>
+
+        {/* Desktop Minimalist Widgets Cluster */}
+        <div className="desktop-widgets-cluster">
+          {/* Widget 1: Digital Dot Matrix Clock & Weather Widget */}
+          <div
+            className="dt-widget dt-widget-clock"
+            onClick={() => openApp(apps.find(a => a.id === 'clock'))}
+            title="Open Clock & Timer"
+          >
+            <div className="dt-widget-header">
+              <span className="dt-widget-tag">
+                <Clock size={11} /> CLOCK
+              </span>
+              <span className="dt-widget-accent-dot" />
+            </div>
+            <div className="dt-widget-big-time">
+              {time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}
+            </div>
+            <div className="dt-widget-footer">
+              <span className="dt-widget-date">
+                {time.toLocaleDateString([], { weekday: 'short', month: 'short', day: 'numeric' })}
+              </span>
+              <span className="dt-widget-weather">
+                <CloudSun size={12} color="#FFCC00" /> 24°C
+              </span>
+            </div>
+          </div>
+
+          {/* Widget 2: System Telemetry Widget */}
+          <div
+            className="dt-widget dt-widget-system"
+            onClick={() => openApp(apps.find(a => a.id === 'activity'))}
+            title="Open Activity Monitor"
+          >
+            <div className="dt-widget-header">
+              <span className="dt-widget-tag">
+                <Cpu size={11} /> SYSTEM
+              </span>
+              <span className="dt-badge-status">NORMAL</span>
+            </div>
+            <div className="dt-widget-metric-row">
+              <div className="dt-metric">
+                <span className="dt-metric-label">CPU</span>
+                <span className="dt-metric-val">14%</span>
+              </div>
+              <div className="dt-metric-divider" />
+              <div className="dt-metric">
+                <span className="dt-metric-label">RAM</span>
+                <span className="dt-metric-val">32%</span>
+              </div>
+              <div className="dt-metric-divider" />
+              <div className="dt-metric">
+                <span className="dt-metric-label">PWR</span>
+                <span className="dt-metric-val">100%</span>
+              </div>
+            </div>
+            <div className="dt-system-graph-preview">
+              <div className="dt-graph-bar" style={{ height: '35%' }} />
+              <div className="dt-graph-bar" style={{ height: '55%' }} />
+              <div className="dt-graph-bar" style={{ height: '25%' }} />
+              <div className="dt-graph-bar active" style={{ height: '70%' }} />
+              <div className="dt-graph-bar" style={{ height: '40%' }} />
+              <div className="dt-graph-bar" style={{ height: '30%' }} />
+              <div className="dt-graph-bar" style={{ height: '50%' }} />
+            </div>
+          </div>
+
+          {/* Widget 3: Quick Yug AI Core Launcher */}
+          <div
+            className="dt-widget dt-widget-ai"
+            onClick={() => openApp(apps.find(a => a.id === 'yug_ai'))}
+            title="Launch Yug AI"
+          >
+            <div className="dt-widget-header">
+              <span className="dt-widget-tag">
+                <Sparkles size={11} color="#AF52DE" /> YUG AI
+              </span>
+              <span className="dt-badge-online">ONLINE</span>
+            </div>
+            <div className="dt-ai-prompt-box">
+              <span>Ask system intelligence...</span>
+            </div>
+          </div>
         </div>
 
         {/* Mobile App Grid */}

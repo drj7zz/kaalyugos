@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="100%" height="100%">
+  <defs>
+    <radialGradient id="matGlow" cx="40%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#121316"/>
+      <stop offset="65%" stop-color="#08080a"/>
+      <stop offset="100%" stop-color="#000000"/>
+    </radialGradient>
+    <pattern id="matrixPattern" width="32" height="32" patternUnits="userSpaceOnUse">
+      <circle cx="16" cy="16" r="1.2" fill="#ffffff" opacity="0.09" />
+    </pattern>
+    <pattern id="coarseGrid" width="128" height="128" patternUnits="userSpaceOnUse">
+      <rect x="0" y="0" width="128" height="128" fill="none" stroke="#ffffff" stroke-width="0.5" stroke-opacity="0.04"/>
+      <circle cx="64" cy="64" r="1.8" fill="#ffffff" opacity="0.14"/>
+    </pattern>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#matGlow)"/>
+  <rect width="1920" height="1080" fill="url(#coarseGrid)"/>
+  <rect width="1920" height="1080" fill="url(#matrixPattern)"/>
+
+  <!-- Matrix Arc Curves -->
+  <g fill="none" stroke="#ffffff" opacity="0.12" stroke-width="2">
+    <path d="M400,0 A600,600 0 0,1 1000,600" stroke-dasharray="8 6"/>
+    <path d="M1520,1080 A540,540 0 0,1 980,540" stroke-dasharray="10 8"/>
+    <circle cx="960" cy="540" r="280" stroke-width="1.5" stroke-dasharray="4 6"/>
+    <circle cx="960" cy="540" r="440" stroke-width="1" stroke-dasharray="6 8"/>
+  </g>
+
+  <!-- Technical Red Accent Dot -->
+  <circle cx="960" cy="540" r="3.5" fill="#d71920"/>
+  <circle cx="960" cy="540" r="8" fill="none" stroke="#d71920" stroke-width="1" opacity="0.6"/>
+</svg>

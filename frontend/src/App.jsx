@@ -26,7 +26,7 @@ function App() {
 
   useEffect(() => {
     let savedWp = localStorage.getItem('kaalyug_wallpaper')
-    if (!savedWp || savedWp.includes('nothing')) {
+    if (!savedWp) {
       savedWp = '/bg.jpeg'
       localStorage.setItem('kaalyug_wallpaper', savedWp)
     }

@@ -1,4 +1,4 @@
-﻿<div align="center">
+<div align="center">
 
 # 🖥️ Kaalyug OS
 
@@ -35,12 +35,15 @@ Kaalyug OS detects screen geometry and touch capabilities in real time, seamless
 
 | Interface Metric | 🖥️ Desktop Web View (> 768px) | 📱 Mobile Experience (<= 768px) |
 |---|---|---|
+| **Aesthetic & Typography** | Dot-matrix monospace accents, glyph indicators & high-contrast glassmorphism | Clean mobile status header & touch-optimized squircles |
 | **Window Compositor** | Floating, draggable, resizable `react-rnd` windows | Full-viewport bottom sheets with drag handles |
-| **Window Controls** | Windows-style controls (Minimize, Maximize/Restore, Close) | Top grab handle + touch dismiss |
-| **App Navigation** | Glassmorphic floating dock with hover magnification | Bottom quick-dock & swipeable app grid |
-| **System Bar** | Top system menu bar with live clock, battery, Wi-Fi | Consolidated mobile status header |
+| **Window Controls** | Desktop controls (Minimize, Maximize/Restore, Close) | Top grab handle + touch dismiss |
+| **App Navigation** | Glassmorphic floating dock with squircle icons & glyph dot indicators | Bottom quick-dock & swipeable app grid |
+| **Desktop Widgets** | Real-time dot-matrix clock, telemetry stats, and AI launcher | Minimal home screen layout with responsive padding |
+| **System Bar** | Top system menu bar with live clock, battery, Wi-Fi & tray controls | Consolidated mobile status header & dynamic notch |
+| **Web Browser** | Sandboxed web browser with dot-matrix URL input & bookmark pills | Fullscreen adaptive web frame with external tab link |
 | **Quick Launcher** | Quick search bar triggered by `⌘K` or `Ctrl+K` | Fullscreen quick-search drawer |
-| **Lock Screen** | Frosted glass liquid blobs + click-to-unlock | Touch-friendly glass unlock slider & tap prompt |
+| **Lock Screen** | Dot-matrix clock, glyph accent dot, and system widgets (Weather, Battery, Security) | Touch-friendly glass unlock, corner quick actions (Torch, Notes) |
 
 ---
 
@@ -223,8 +226,8 @@ flowchart TD
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/drj7zz/giridirghraj.git kaalyug-os
-cd kaalyug-os
+git clone https://github.com/drj7zz/kaalyugos.git
+cd kaalyugos
 ```
 
 ---
@@ -402,13 +405,37 @@ GET /health
 
 ## 🤝 Contributing
 
-Contributions to Kaalyug OS are warmly welcomed!
+Contributions, bug reports, and pull requests to **Kaalyug OS** are warmly welcomed!
 
-1. Fork the Project repository.
-2. Create your Feature Branch (`git checkout -b feat/AmazingFeature`).
-3. Commit your changes (`git commit -m 'feat: Add some AmazingFeature'`).
-4. Push to the Branch (`git push origin feat/AmazingFeature`).
-5. Open a Pull Request.
+- **Official Repository**: [https://github.com/drj7zz/kaalyugos](https://github.com/drj7zz/kaalyugos)
+- **Issues & Bug Reports**: [https://github.com/drj7zz/kaalyugos/issues](https://github.com/drj7zz/kaalyugos/issues)
+- **Pull Requests**: [https://github.com/drj7zz/kaalyugos/pulls](https://github.com/drj7zz/kaalyugos/pulls)
+
+### How to Contribute:
+1. Fork the repository: [https://github.com/drj7zz/kaalyugos/fork](https://github.com/drj7zz/kaalyugos/fork)
+2. Create a feature branch:
+   ```bash
+   git checkout -b feat/AmazingFeature
+   ```
+3. Commit your changes:
+   ```bash
+   git commit -m 'feat: Add some AmazingFeature'
+   ```
+4. Push to your branch:
+   ```bash
+   git push origin feat/AmazingFeature
+   ```
+5. Open a Pull Request on GitHub.
+
+---
+
+## 👨‍💻 Developer & Creator
+
+**Kaalyug OS** is designed and engineered by **Dirghraj Giri (drj7zz)**.
+
+- **Developer Portfolio**: [drj7zz.vercel.app](https://drj7zz.vercel.app)
+- **GitHub**: [@drj7zz](https://github.com/drj7zz)
+- **Project URL**: [https://github.com/drj7zz/kaalyugos](https://github.com/drj7zz/kaalyugos)
 
 ---
 
@@ -418,6 +445,6 @@ Distributed under the **MIT License**. See [`LICENSE`](LICENSE) for more informa
 
 <div align="center">
 
-**Built with ❤️ for the web exploration era by Dirghraj Giri.**
+**Built with ❤️ for the web exploration era by [Dirghraj Giri](https://drj7zz.vercel.app).**
 
 </div>

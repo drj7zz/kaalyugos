@@ -198,40 +198,110 @@
   filter: drop-shadow(0 1px 4px rgba(0,0,0,0.32));
 }
 
-/* ── Clock ── */
+/* ── Clock & Minimalist Widgets ── */
 
 .ls-clock-section {
   position: absolute;
-  top: clamp(72px, 14vh, 140px);
-  right: 24px;
-  left: 24px;
+  top: clamp(64px, 12vh, 120px);
+  right: 20px;
+  left: 20px;
   z-index: 1;
   text-align: center;
   animation: lsFadeInDown 0.7s cubic-bezier(0.16,1,0.3,1) both;
   user-select: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .ls-clock {
-  font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    "SF Pro Display",
-    "Helvetica Neue",
-    sans-serif;
+  font-family: var(--font-dot, 'JetBrains Mono', monospace);
+  font-size: clamp(3.8rem, 9.5vw, 7.5rem);
+  font-weight: 300;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  text-shadow: 0 3px 26px rgba(0,0,0,0.35);
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: center;
+  position: relative;
+}
 
-  font-size: clamp(4.5rem, 10vw, 8.25rem);
-  font-weight: 200;
-  line-height: 0.93;
-
-  text-shadow: 0 3px 26px rgba(0,0,0,0.28);
+.ls-clock-accent-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--glyph-red, #d71920);
+  display: inline-block;
+  margin-left: 8px;
+  box-shadow: 0 0 10px rgba(215, 25, 32, 0.6);
+  align-self: center;
 }
 
 .ls-date {
-  margin-top: 12px;
-  color: rgba(255,255,255,0.92);
-  font-size: clamp(1rem, 1.8vw, 1.28rem);
+  margin-top: 10px;
+  color: rgba(255,255,255,0.85);
+  font-family: var(--font-dot, 'JetBrains Mono', monospace);
+  font-size: clamp(0.78rem, 1.3vw, 0.95rem);
   font-weight: 500;
-  text-shadow: 0 1px 9px rgba(0,0,0,0.34);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.4);
+}
+
+/* Minimalist Lockscreen Widgets */
+.ls-widgets-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.ls-widget-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.22);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.ls-widget-pill:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.ls-widget-dot-text {
+  font-family: var(--font-dot, 'JetBrains Mono', monospace);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #fff;
+}
+
+.ls-widget-sub {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 400;
+}
+
+.ls-widget-status-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #34C759;
+  box-shadow: 0 0 6px rgba(52, 199, 89, 0.6);
+}
+
+.ls-widget-secure {
+  border-color: rgba(52, 199, 89, 0.28);
 }
 
 /* ── User section ── */
@@ -502,28 +572,57 @@
   bottom: 0;
   left: 0;
   z-index: 1;
-
   display: flex;
-  justify-content: center;
-  gap: 12px;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 16px 24px 22px;
+  box-sizing: border-box;
+}
 
-  padding: 18px 24px 22px;
+.ls-corner-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.ls-corner-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+  transform: scale(1.08);
+}
+
+.ls-corner-btn:active {
+  transform: scale(0.94);
+}
+
+.ls-corner-btn.active {
+  background: rgba(255, 204, 0, 0.22);
+  border-color: rgba(255, 204, 0, 0.6);
+  box-shadow: 0 0 16px rgba(255, 204, 0, 0.4);
 }
 
 .ls-bottom-btn {
-  padding: 6px 14px;
+  padding: 7px 16px;
   font-size: 0.78rem;
-
+  font-family: var(--font-dot, monospace);
+  letter-spacing: 0.04em;
   text-shadow: 0 1px 7px rgba(0,0,0,0.38);
-
-  border-radius: 10px;
-
+  border-radius: 999px;
   border: 1px solid rgba(255,255,255,0.18);
-
   background: rgba(255,255,255,0.08);
-
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 
 .ls-skip-btn:hover,
@@ -763,81 +862,109 @@
 /* ── Responsive ── */
 
 @media (max-width: 600px) {
-
   .ls-topbar {
-    padding: 15px 17px;
+    padding: 14px 18px;
   }
 
   .ls-topbar::before {
     position: absolute;
     top: 10px;
     left: 50%;
-
     width: 96px;
     height: 26px;
-
     border-radius: 999px;
-
     background: #050505;
-
     content: '';
-
     transform: translateX(-50%);
-
     box-shadow:
       inset 0 1px rgba(255,255,255,0.08),
       0 1px 3px rgba(0,0,0,0.3);
   }
 
   .ls-topbar-right {
-    gap: 11px;
+    gap: 10px;
   }
 
   .ls-clock-section {
-    top: clamp(82px, 14vh, 118px);
+    top: clamp(56px, 10vh, 90px);
+    right: 14px;
+    left: 14px;
   }
 
   .ls-clock {
-    font-size: clamp(4.15rem, 20vw, 5.75rem);
+    font-size: clamp(3.2rem, 16vw, 4.6rem);
+  }
+
+  .ls-clock-accent-dot {
+    width: 7px;
+    height: 7px;
+    margin-left: 6px;
   }
 
   .ls-date {
-    margin-top: 9px;
-    font-size: 1rem;
+    margin-top: 6px;
+    font-size: 0.82rem;
+  }
+
+  .ls-widgets-row {
+    gap: 6px;
+    margin-top: 10px;
+  }
+
+  .ls-widget-pill {
+    padding: 5px 10px;
+    font-size: 10px;
   }
 
   .ls-user-section {
-    top: 58%;
+    top: 64%;
+    width: min(100% - 32px, 280px);
+  }
+
+  .ls-glass-card {
+    padding: 20px 20px 16px;
+    border-radius: 24px;
   }
 
   .ls-avatar-ring {
-    width: 96px;
-    height: 96px;
+    width: 86px;
+    height: 86px;
   }
 
   .ls-bottom-bar {
-    padding-bottom: max(
-      18px,
-      env(safe-area-inset-bottom)
-    );
+    padding: 12px 18px max(14px, env(safe-area-inset-bottom));
+  }
+
+  .ls-corner-btn {
+    width: 40px;
+    height: 40px;
   }
 }
 
-@media (max-height: 620px) and (min-width: 601px) {
-
-  .ls-clock-section {
-    top: 62px;
+@media (max-width: 380px) {
+  .ls-widget-secure {
+    display: none;
   }
-
   .ls-clock {
-    font-size: clamp(
-      4.25rem,
-      10vw,
-      6.5rem
-    );
+    font-size: 3rem;
   }
+}
 
-  .ls-user-section {
-    top: 62%;
+@media (max-height: 640px) {
+  .ls-clock-section {
+    top: 52px;
   }
-       }
+  .ls-clock {
+    font-size: clamp(2.8rem, 8vw, 3.8rem);
+  }
+  .ls-widgets-row {
+    margin-top: 6px;
+  }
+  .ls-user-section {
+    top: 65%;
+  }
+  .ls-avatar-ring {
+    width: 72px;
+    height: 72px;
+  }
+}

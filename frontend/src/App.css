@@ -3,20 +3,22 @@
 /* ========== THEME TOKENS ========== */
 :root,
 [data-theme='dark'] {
+  --font-dot: 'JetBrains Mono', 'Courier New', monospace;
+  --glyph-red: #d71920;
   --text-primary: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.80);
-  --text-muted: rgba(255, 255, 255, 0.55);
-  --glass-bg: rgba(20, 24, 38, 0.75);
-  --glass-header: rgba(15, 20, 32, 0.88);
-  --glass-border: rgba(255, 255, 255, 0.12);
-  --glass-blur: blur(20px);
-  --dock-bg: rgba(15, 20, 35, 0.80);
+  --text-secondary: rgba(255, 255, 255, 0.85);
+  --text-muted: rgba(255, 255, 255, 0.50);
+  --glass-bg: rgba(16, 18, 26, 0.78);
+  --glass-header: rgba(14, 16, 24, 0.90);
+  --glass-border: rgba(255, 255, 255, 0.10);
+  --glass-blur: blur(24px);
+  --dock-bg: rgba(14, 16, 26, 0.84);
   --accent: #0078d4;
   --accent-soft: rgba(0, 120, 212, 0.22);
-  --card-bg: rgba(20, 26, 42, 0.85);
+  --card-bg: rgba(18, 21, 32, 0.88);
   --shortcut-text: #ffffff;
   --shortcut-shadow: 0 1px 6px rgba(0, 0, 0, 0.85);
-  --window-solid-bg: #141824;
+  --window-solid-bg: #11141e;
 }
 
 [data-theme='white'],

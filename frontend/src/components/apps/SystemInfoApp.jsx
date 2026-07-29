@@ -49,6 +49,8 @@ const SystemInfoApp = ({ onOpenApp }) => {
           <ul className="sysinfo-specs-list">
             <li><span>Architecture:</span> <b>x86_64 Virtualized</b></li>
             <li><span>Kernel:</span> <b>Kaalyug-WebKernel 2.0</b></li>
+            <li><span>Developer:</span> <a href="https://drj7zz.vercel.app" target="_blank" rel="noreferrer" style={{ color: 'var(--accent)', textDecoration: 'none' }}><b>drj7zz.vercel.app ↗</b></a></li>
+            <li><span>Contribute:</span> <a href="https://github.com/drj7zz/kaalyugos" target="_blank" rel="noreferrer" style={{ color: 'var(--accent)', textDecoration: 'none' }}><b>github.com/drj7zz/kaalyugos ↗</b></a></li>
             <li><span>Processor Cores:</span> <b>{cores} Logical Cores</b></li>
             <li><span>Compositor:</span> <b>Liquid Glass Compositor</b></li>
             <li><span>Platform Host:</span> <b>{platform}</b></li>
