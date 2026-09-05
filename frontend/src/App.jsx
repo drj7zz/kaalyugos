@@ -26,7 +26,8 @@ function App() {
 
   useEffect(() => {
     let savedWp = localStorage.getItem('kaalyug_wallpaper')
-    if (!savedWp) {
+    // 'white' wallpaper was removed — fall back to the default
+    if (!savedWp || savedWp.includes('white-bg')) {
       savedWp = '/bg.jpeg'
       localStorage.setItem('kaalyug_wallpaper', savedWp)
     }

@@ -136,7 +136,16 @@ const SnakeApp = () => {
       draw();
     };
 
-    let intervalId = setInterval(tick, state.speed);
+    // Freeze the game loop the instant the snake dies (no refresh, no restart)
+    let intervalId = setInterval(() => {
+      if (state.gameOver) { clearInterval(intervalId); intervalId = null; return; }
+      tick();
+    }, state.speed);
+
+    // Block pull-to-refresh / scroll gestures over the game area (mobile)
+    const preventTouch = (e) => { if (e.cancelable) e.preventDefault(); };
+    const appEl = canvas.closest('.snake-app') || canvas.parentElement;
+    appEl.addEventListener('touchmove', preventTouch, { passive: false });
 
     const handleKey = (e) => {
       if (state.gameOver && e.key === 'Enter') {
@@ -153,6 +162,9 @@ const SnakeApp = () => {
         a: { x: -1, y: 0 },
         d: { x: 1, y: 0 },
       };
+      if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(e.key)) {
+        e.preventDefault(); // stop page scroll on mobile/desktop
+      }
       const newDir = keyMap[e.key];
       if (newDir && !(newDir.x === -state.dir.x && newDir.y === -state.dir.y)) {
         state.dir = newDir;
@@ -166,6 +178,8 @@ const SnakeApp = () => {
       state.running = false;
       clearInterval(intervalId);
       window.removeEventListener('keydown', handleKey);
+      const appEl = canvas.closest('.snake-app') || canvas.parentElement;
+      appEl.removeEventListener('touchmove', preventTouch);
     };
   }, []);
 

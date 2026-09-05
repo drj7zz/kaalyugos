@@ -4,7 +4,6 @@ import { Settings, Palette, Image, RotateCcw, Lock, HardDrive } from 'lucide-rea
 const WALLPAPERS = [
   { id: 'glyph', name: 'Glyph Architecture', url: '/glyph-bg.svg' },
   { id: 'matrix', name: 'Matrix Monochrome', url: '/matrix-bg.svg' },
-  { id: 'white', name: 'Pure Minimal Light', url: '/white-bg.svg' },
   { id: 'default', name: 'Cosmic Sky', url: '/bg.jpeg' },
   { id: 'nebula', name: 'Dark Nebula', url: 'https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?auto=format&fit=crop&w=2000&q=80' },
   { id: 'minimal', name: 'Cyber Minimal', url: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=2000&q=80' },

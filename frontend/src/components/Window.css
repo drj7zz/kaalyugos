@@ -1530,6 +1530,10 @@
   align-items: center;
   gap: 12px;
   width: 100%;
+  /* Kill pull-to-refresh & rubber-band scroll while gaming */
+  overscroll-behavior: contain;
+  overscroll-behavior-y: none;
+  touch-action: none;
 }
 
 .snake-top-bar {

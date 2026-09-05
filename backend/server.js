@@ -53,6 +53,36 @@ ${YUG_AI_CONTEXT}`;
 app.use(cors({ origin: origins.includes('*') ? true : origins }));
 app.use(express.json({ limit: '20kb' }));
 
+// ── Yug AI usage limiter — protects the Gemini API key from heavy/abusive use ──
+const AI_RATE_LIMIT = {
+  maxRequests: Number(process.env.AI_MAX_REQUESTS_PER_MINUTE || 12),
+  windowMs: 60_000,
+};
+const aiUsageMap = new Map(); // ip -> { count, windowStart }
+function aiRateLimiter(req, res, next) {
+  const ip = req.ip || req.socket?.remoteAddress || 'unknown';
+  const now = Date.now();
+  let entry = aiUsageMap.get(ip);
+  if (!entry || now - entry.windowStart > AI_RATE_LIMIT.windowMs) {
+    entry = { count: 0, windowStart: now };
+    aiUsageMap.set(ip, entry);
+  }
+  entry.count += 1;
+  // Opportunistic cleanup so the map cannot grow unbounded
+  if (aiUsageMap.size > 500) {
+    for (const [key, val] of aiUsageMap) {
+      if (now - val.windowStart > AI_RATE_LIMIT.windowMs) aiUsageMap.delete(key);
+    }
+  }
+  if (entry.count > AI_RATE_LIMIT.maxRequests) {
+    const waitSec = Math.ceil((entry.windowStart + AI_RATE_LIMIT.windowMs - now) / 1000);
+    return res.status(429).json({
+      error: `Yug AI usage limit reached (${AI_RATE_LIMIT.maxRequests} requests/minute). Try again in ${waitSec}s.`,
+    });
+  }
+  next();
+}
+
 async function connectDatabase() {
   if (!mongoUri || /PASTE_|YOUR_/i.test(mongoUri)) throw new Error('MONGODB_URI is missing or still a placeholder');
   client = new MongoClient(mongoUri, { serverSelectionTimeoutMS: 10000 });
@@ -85,8 +115,8 @@ app.get('/health', (_req, res) => res.status(200).json({
   error: databaseError
 }));
 
-// Yug AI chat endpoint — with retry for transient 503s
-app.post('/api/chat', async (req, res) => {
+// Yug AI chat endpoint — rate-limited, with retry for transient 503s
+app.post('/api/chat', aiRateLimiter, async (req, res) => {
   const question = String(req.body?.question || '').trim().slice(0, 1000);
   if (!question) return res.status(400).json({ error: 'Question is required.' });
   if (!GEMINI_API_KEY) return res.status(503).json({ error: 'Yug AI is not configured. Set GEMINI_API_KEY in .env.' });
@@ -100,6 +130,10 @@ app.post('/api/chat', async (req, res) => {
       const model = genAI.getGenerativeModel({
         model: 'gemini-flash-lite-latest',
         systemInstruction: YUG_AI_SYSTEM,
+        generationConfig: {
+          maxOutputTokens: 800,   // cap heavy/expensive generations
+          temperature: 0.7,
+        },
       });
       const result = await model.generateContent(question);
       const answer = result.response.text();
